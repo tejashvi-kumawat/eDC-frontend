@@ -84,7 +84,7 @@ function App() {
               <Route path="/admin/initiatives" element={<ManageInitiatives />} />
               <Route path="/admin/queries" element={<ContactQueries />} /> */}
             </Routes>
-            <FireStrip />
+            {/* <FireStrip /> */}
           </main>
           
           <Footer />
