@@ -11,7 +11,7 @@ import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 
 // Pages
-import HomePage from './pages/HomePage';
+import HomePage from './pages/HomePage.jsx';
 import Initiatives from './pages/Initiatives';
 import Team from './pages/Team';
 import Events from './pages/Events';
