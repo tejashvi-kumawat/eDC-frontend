@@ -2,30 +2,30 @@
 
 /* CSS Variables */
 :root {
-  --primary: #007aff;
-  --primary-dark: #0056b3;
-  --secondary: #1c1c1e;
-  --accent: #32d74b;
-  --warning: #ff9f0a;
-  --danger: #ff453a;
+  --primary: #ffd600;            /* Flare yellow */
+  --primary-dark: #ffab00;       /* Deep yellow/orange */
+  --secondary: #232323;          /* Extra dark for depth */
+  --accent: #ffea00;             /* Bright accent yellow */
+  --warning: #ffb300;            /* Warm warning yellow */
+  --danger: #ff5252;             /* Vibrant red for errors */
   
-  --bg-primary: #000000;
-  --bg-secondary: #1c1c1e;
-  --bg-tertiary: #2c2c2e;
-  --bg-quaternary: #3a3a3c;
+  --bg-primary: #121212;         /* Near-black background */
+  --bg-secondary: #181818;       /* Slightly lighter dark */
+  --bg-tertiary: #232323;        /* For card backgrounds */
+  --bg-quaternary: #292929;      /* For subtle panels */
   
-  --text-primary: #ffffff;
-  --text-secondary: #a1a1a6;
-  --text-tertiary: #636366;
+  --text-primary: #fffde7;       /* Off-white for text */
+  --text-secondary: #ffe082;     /* Soft yellow for secondary text */
+  --text-tertiary: #bdbdbd;      /* Muted gray for less important text */
   
-  --border-primary: rgba(255, 255, 255, 0.1);
+  --border-primary: rgba(255, 214, 0, 0.15);   /* Soft yellow border */
   --border-secondary: rgba(255, 255, 255, 0.05);
   
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
-  --shadow-xl: 0 16px 64px rgba(0, 0, 0, 0.6);
-  --shadow-glow: 0 0 20px rgba(0, 122, 255, 0.3);
+  --shadow-sm: 0 2px 8px rgba(255, 214, 0, 0.05);
+  --shadow-md: 0 4px 16px rgba(255, 214, 0, 0.08);
+  --shadow-lg: 0 8px 32px rgba(255, 214, 0, 0.12);
+  --shadow-xl: 0 16px 64px rgba(255, 214, 0, 0.18);
+  --shadow-glow: 0 0 20px rgba(255, 214, 0, 0.35);
   
   --radius-sm: 6px;
   --radius-md: 12px;
@@ -36,6 +36,7 @@
   --transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
 
 /* Reset */
 * {
@@ -173,15 +174,16 @@ p {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--primary) 0%, #00d1ff 100%);
-  color: #000000;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: #232323;
   box-shadow: var(--shadow-md);
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
   box-shadow: var(--shadow-glow);
+  color: #000;
 }
+
 
 .btn-outline {
   background: transparent;
@@ -248,10 +250,10 @@ input::placeholder, textarea::placeholder {
 }
 
 .card:hover {
-  transform: translateY(-8px);
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 0 24px 4px var(--primary), var(--shadow-lg);
   border-color: var(--primary);
 }
+
 
 /* Glass Effect */
 .glass {
@@ -262,11 +264,12 @@ input::placeholder, textarea::placeholder {
 
 /* Gradient Text */
 .gradient-text {
-  background: linear-gradient(135deg, var(--primary) 0%, #00d1ff 100%);
+  background: linear-gradient(90deg, var(--primary), var(--accent));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+
 
 /* Loading Animation */
 @keyframes spin {

@@ -1,0 +1,44 @@
+.fire-strip {
+  mix-blend-mode: difference;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 200px;               /* fixed visible height */
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 9999;
+  width: 100%;
+}
+
+.fire-video {
+  width: 100%;                 /* full width of container */
+  height: 200px;               /* match container height exactly */
+  object-fit: fill;            /* stretch to fill, may distort aspect ratio */
+  filter: 
+    brightness(1.25)
+    saturate(1.9)
+    blur(0.4px)
+    hue-rotate(180deg);        /* shifts yellow/orange to blue */
+}
+
+/* subtle glow that bleeds onto the page */
+body::after {
+  content: "";
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 6vh;
+  background: linear-gradient(0deg, rgba(0, 150, 255, 0.35), transparent);
+  pointer-events: none;
+  z-index: 9998;
+}
+
+/* respect motion-sensitive users */
+@media (prefers-reduced-motion: reduce) {
+  .fire-strip,
+  body::after {
+    display: none;
+  }
+}

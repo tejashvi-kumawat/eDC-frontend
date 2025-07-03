@@ -19,6 +19,7 @@ import Opportunities from './pages/Opportunities';
 import Blogs from './pages/Blogs';
 import Contact from './pages/Contact';
 import Calendar from './pages/Calendar';
+import FireStrip from './components/FireStrip.jsx';
 
 // // Admin Pages
 import AdminDashboard from './pages/Admin/Dashboard';
@@ -83,6 +84,7 @@ function App() {
               <Route path="/admin/initiatives" element={<ManageInitiatives />} />
               <Route path="/admin/queries" element={<ContactQueries />} /> */}
             </Routes>
+            <FireStrip />
           </main>
           
           <Footer />
