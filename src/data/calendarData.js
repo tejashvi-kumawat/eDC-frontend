@@ -1,0 +1,147 @@
+// src/data/calendarData.js
+export const localCalendarData = [
+  {
+    id: 1,
+    title: "Startup Pitch Competition 2025",
+    description: "Annual startup pitch competition where entrepreneurs present their innovative ideas to a panel of expert judges and investors.",
+    event_type: "competition",
+    start_datetime: "2025-08-15T09:00:00Z",
+    end_datetime: "2025-08-15T18:00:00Z",
+    location: "Main Auditorium, IIT Delhi",
+    max_participants: 100,
+    registration_link: "https://edc.iitd.ac.in/register/pitch-competition",
+    organizer: "eDC IITD"
+  },
+  {
+    id: 2,
+    title: "AI & Machine Learning Workshop",
+    description: "Comprehensive workshop covering fundamentals of AI and ML, hands-on coding sessions, and real-world applications.",
+    event_type: "workshop",
+    start_datetime: "2025-07-20T10:00:00Z",
+    end_datetime: "2025-07-22T17:00:00Z",
+    location: "Computer Science Building, Room 301",
+    max_participants: 50,
+    registration_link: "https://edc.iitd.ac.in/register/ai-workshop",
+    organizer: "Tech Team, eDC IITD"
+  },
+  {
+    id: 3,
+    title: "Entrepreneurship Summit 2025",
+    description: "Two-day summit featuring keynote speakers, panel discussions, networking sessions, and startup exhibitions.",
+    event_type: "conference",
+    start_datetime: "2025-09-10T09:00:00Z",
+    end_datetime: "2025-09-11T18:00:00Z",
+    location: "Convention Center, IIT Delhi",
+    max_participants: 500,
+    registration_link: "https://edc.iitd.ac.in/register/summit",
+    organizer: "eDC IITD"
+  },
+  {
+    id: 4,
+    title: "Digital Marketing Masterclass",
+    description: "Learn advanced digital marketing strategies, social media optimization, content marketing, and analytics.",
+    event_type: "seminar",
+    start_datetime: "2025-07-25T14:00:00Z",
+    end_datetime: "2025-07-25T17:00:00Z",
+    location: "Lecture Hall 1, Management Building",
+    max_participants: 80,
+    registration_link: "https://edc.iitd.ac.in/register/marketing-masterclass",
+    organizer: "Marketing Team, eDC IITD"
+  },
+  {
+    id: 5,
+    title: "Blockchain Technology Meetup",
+    description: "Monthly meetup for blockchain enthusiasts. Discuss latest trends, share projects, and network with like-minded individuals.",
+    event_type: "meetup",
+    start_datetime: "2025-07-30T18:00:00Z",
+    end_datetime: "2025-07-30T20:00:00Z",
+    location: "Cafeteria, Student Activity Center",
+    max_participants: 40,
+    registration_link: "https://edc.iitd.ac.in/register/blockchain-meetup",
+    organizer: "Blockchain Club, eDC IITD"
+  },
+  {
+    id: 6,
+    title: "Product Design Workshop",
+    description: "Learn user-centered design principles, prototyping techniques, and design thinking methodologies.",
+    event_type: "workshop",
+    start_datetime: "2025-08-05T10:00:00Z",
+    end_datetime: "2025-08-06T16:00:00Z",
+    location: "Design Lab, Architecture Building",
+    max_participants: 30,
+    registration_link: "https://edc.iitd.ac.in/register/design-workshop",
+    organizer: "Design Team, eDC IITD"
+  },
+  {
+    id: 7,
+    title: "Fintech Innovation Challenge",
+    description: "48-hour hackathon focused on financial technology solutions. Build innovative fintech products and compete for prizes.",
+    event_type: "competition",
+    start_datetime: "2025-08-20T18:00:00Z",
+    end_datetime: "2025-08-22T18:00:00Z",
+    location: "Innovation Hub, IIT Delhi",
+    max_participants: 120,
+    registration_link: "https://edc.iitd.ac.in/register/fintech-challenge",
+    organizer: "eDC IITD & Banking Partners"
+  },
+  {
+    id: 8,
+    title: "Women in Tech Seminar",
+    description: "Inspiring seminar featuring successful women entrepreneurs and tech leaders.",
+    event_type: "seminar",
+    start_datetime: "2025-08-08T15:00:00Z",
+    end_datetime: "2025-08-08T18:00:00Z",
+    location: "Seminar Hall, Main Building",
+    max_participants: 100,
+    registration_link: "https://edc.iitd.ac.in/register/women-tech",
+    organizer: "Diversity Committee, eDC IITD"
+  },
+  {
+    id: 9,
+    title: "Startup Founders Meetup",
+    description: "Monthly networking event for startup founders and aspiring entrepreneurs.",
+    event_type: "meetup",
+    start_datetime: "2025-07-15T17:00:00Z",
+    end_datetime: "2025-07-15T19:00:00Z",
+    location: "Rooftop Cafe, Student Center",
+    max_participants: 60,
+    registration_link: "https://edc.iitd.ac.in/register/founders-meetup",
+    organizer: "Alumni Network, eDC IITD"
+  },
+  {
+    id: 10,
+    title: "Cybersecurity Awareness Workshop",
+    description: "Essential cybersecurity workshop covering threat detection, prevention strategies, and best practices.",
+    event_type: "workshop",
+    start_datetime: "2025-07-12T13:00:00Z",
+    end_datetime: "2025-07-12T17:00:00Z",
+    location: "IT Lab, Computer Center",
+    max_participants: 45,
+    registration_link: "https://edc.iitd.ac.in/register/cybersecurity",
+    organizer: "Security Team, eDC IITD"
+  },
+  {
+    id: 11,
+    title: "Innovation Showcase",
+    description: "Annual showcase of student innovations and research projects.",
+    event_type: "conference",
+    start_datetime: "2025-09-25T10:00:00Z",
+    end_datetime: "2025-09-25T17:00:00Z",
+    location: "Main Exhibition Hall",
+    max_participants: 300,
+    registration_link: "https://edc.iitd.ac.in/register/innovation-showcase",
+    organizer: "Research Committee, eDC IITD"
+  },
+  {
+    id: 12,
+    title: "Mobile App Development Bootcamp",
+    description: "Intensive 3-day bootcamp on mobile app development using React Native and Flutter.",
+    event_type: "workshop",
+    start_datetime: "2025-08-12T09:00:00Z",
+    end_datetime: "2025-08-14T18:00:00Z",
+    location: "Tech Lab, Computer Science Building",
+    max_participants: 35,
+    registration_link: "https://edc.iitd.ac.in/register/mobile-bootcamp",
+    organizer: "Mobile Development Team"
+  }
+];
