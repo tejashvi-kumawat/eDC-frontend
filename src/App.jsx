@@ -66,7 +66,7 @@ function App() {
           
           <main className="main-content">
             <Routes>
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={<HomePage />} />
               <Route path="/initiatives" element={<Initiatives />} />
               <Route path="/team" element={<Team />} />
               <Route path="/events" element={<Events />} />
