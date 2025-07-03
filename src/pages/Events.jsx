@@ -14,6 +14,9 @@ import {
   AlertCircle
 } from 'lucide-react';
 
+// Import the proper EventCard component
+import EventCard from '../components/EventCard';
+
 // Local Data
 import { localEventsData } from '../data/eventsData';
 
@@ -156,7 +159,12 @@ const Events = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
                 >
-                  <EventCard event={event} featured={true} isLocalData={true} />
+                  <EventCard 
+                    event={event} 
+                    featured={true} 
+                    isLocalData={true}
+                    index={index}
+                  />
                 </motion.div>
               ))}
             </div>
@@ -284,124 +292,6 @@ const Events = () => {
         </div>
       </section>
     </div>
-  );
-};
-
-// Event Card Component (Registration Removed)
-const EventCard = ({ event, featured = false, viewMode = 'grid', index = 0, isLocalData = false }) => {
-  const formatDate = (dateString) => {
-    try {
-      return new Date(dateString).toLocaleDateString('en-US', {
-        weekday: 'short',
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-      });
-    } catch {
-      return 'Date TBD';
-    }
-  };
-
-  const getEventStatus = (event) => {
-    const now = new Date();
-    const startDate = new Date(event.start_datetime);
-    const endDate = new Date(event.end_datetime);
-
-    if (now < startDate) return 'upcoming';
-    if (now > endDate) return 'past';
-    return 'ongoing';
-  };
-
-  const getImageUrl = (imageUrl) => {
-    if (isLocalData) {
-      return imageUrl || '/events/default-event.jpg';
-    }
-    return imageUrl;
-  };
-
-  const eventStatus = getEventStatus(event);
-
-  return (
-    <motion.div
-      className={`event-card ${featured ? 'featured' : ''} ${viewMode} ${eventStatus}`}
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.1, duration: 0.5 }}
-      whileHover={{ y: -5 }}
-      layout
-    >
-      {/* Event Image */}
-      <div className="event-image">
-        <img 
-          src={getImageUrl(event.image)} 
-          alt={event.title}
-          loading="lazy"
-          onError={(e) => {
-            e.target.src = 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
-          }}
-        />
-        <div className="image-overlay"></div>
-        
-        <div className={`event-status ${eventStatus}`}>
-          {eventStatus === 'upcoming' && <Clock size={14} />}
-          {eventStatus === 'ongoing' && <AlertCircle size={14} />}
-          {eventStatus === 'past' && <Calendar size={14} />}
-          {eventStatus.charAt(0).toUpperCase() + eventStatus.slice(1)}
-        </div>
-
-        {featured && (
-          <div className="featured-badge">
-            <Star size={14} />
-            Featured
-          </div>
-        )}
-      </div>
-
-      {/* Event Content */}
-      <div className="event-content">
-        <div className="event-type">{event.event_type}</div>
-        <h3 className="event-title">{event.title}</h3>
-        
-        <p className="event-description">
-          {event.description.length > 120 
-            ? `${event.description.substring(0, 120)}...` 
-            : event.description
-          }
-        </p>
-
-        <div className="event-details">
-          <div className="detail-item">
-            <Calendar size={16} />
-            <span>{formatDate(event.start_datetime)}</span>
-          </div>
-          <div className="detail-item">
-            <MapPin size={16} />
-            <span>{event.location}</span>
-          </div>
-          <div className="detail-item">
-            <Users size={16} />
-            <span>{event.max_participants} participants</span>
-          </div>
-        </div>
-
-        {/* Entry fee information (kept for display only) */}
-        {event.entry_fee !== undefined && (
-          <div className="event-fee">
-            <strong>
-              {event.entry_fee === 0 ? 'Free Event' : `Entry Fee: ₹${event.entry_fee}`}
-            </strong>
-          </div>
-        )}
-
-        {/* Registration actions removed */}
-        {/* Event organizer info */}
-        {/* <div className="event-organizer">
-          <span>Organized by: {event.organizer}</span>
-        </div> */}
-      </div>
-    </motion.div>
   );
 };
 

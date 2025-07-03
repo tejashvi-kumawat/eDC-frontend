@@ -5,9 +5,6 @@ import {
   User, 
   Clock, 
   Eye, 
-  Heart, 
-  Share2, 
-  BookmarkPlus,
   ArrowRight,
   Tag
 } from 'lucide-react';
@@ -19,10 +16,9 @@ const BlogCard = ({
   blog, 
   featured = false, 
   viewMode = 'grid', 
-  index = 0 
+  index = 0,
+  isLocalData = false
 }) => {
-  const [isLiked, setIsLiked] = useState(false);
-  const [isBookmarked, setIsBookmarked] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
 
   // Safely handle blog object
@@ -60,25 +56,11 @@ const BlogCard = ({
 
   const tags = getTags();
 
-  const handleLike = (e) => {
-    e.preventDefault();
-    setIsLiked(!isLiked);
-  };
-
-  const handleBookmark = (e) => {
-    e.preventDefault();
-    setIsBookmarked(!isBookmarked);
-  };
-
-  const handleShare = (e) => {
-    e.preventDefault();
-    if (navigator.share) {
-      navigator.share({
-        title: blog.title || 'Blog Post',
-        text: blog.excerpt || blog.content?.substring(0, 160) || 'Check out this blog post',
-        url: window.location.origin + `/blogs/${blog.slug || blog.id}`,
-      });
+  const getImageUrl = (imageUrl) => {
+    if (isLocalData) {
+      return imageUrl || '/blogs/default-blog.jpg';
     }
+    return getMediaUrl(imageUrl) || 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
   };
 
   return (
@@ -91,17 +73,20 @@ const BlogCard = ({
         {/* Blog Image */}
         <div className="blog-image">
           <img 
-            src={getMediaUrl(blog.featured_image) || 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'} 
+            src={getImageUrl(blog.image || blog.featured_image)} 
             alt={blog.title || 'Blog post'}
             loading="lazy"
             onLoad={() => setImageLoaded(true)}
+            onError={(e) => {
+              e.target.src = 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
+            }}
             className={imageLoaded ? 'loaded' : ''}
           />
           <div className="image-overlay"></div>
           
           {/* Blog Badges */}
           <div className="blog-badges">
-            {blog.is_featured && (
+            {(blog.is_featured || featured) && (
               <div className="featured-badge">
                 Featured
               </div>
@@ -112,31 +97,6 @@ const BlogCard = ({
                 {blog.category}
               </div>
             )}
-          </div>
-
-          {/* Quick Actions */}
-          <div className="quick-actions">
-            <button 
-              className={`action-btn ${isLiked ? 'active' : ''}`}
-              onClick={handleLike}
-              title="Like"
-            >
-              <Heart size={16} fill={isLiked ? 'currentColor' : 'none'} />
-            </button>
-            <button 
-              className={`action-btn ${isBookmarked ? 'active' : ''}`}
-              onClick={handleBookmark}
-              title="Bookmark"
-            >
-              <BookmarkPlus size={16} fill={isBookmarked ? 'currentColor' : 'none'} />
-            </button>
-            <button 
-              className="action-btn"
-              onClick={handleShare}
-              title="Share"
-            >
-              <Share2 size={16} />
-            </button>
           </div>
 
           {/* Reading Progress */}
@@ -165,7 +125,7 @@ const BlogCard = ({
             <div className="meta-right">
               <div className="meta-item">
                 <Clock size={14} />
-                <span>{getReadingTime(blog.content)}</span>
+                <span>{blog.read_time ? `${blog.read_time} min read` : getReadingTime(blog.content)}</span>
               </div>
               {blog.views_count && (
                 <div className="meta-item">
@@ -189,7 +149,7 @@ const BlogCard = ({
             }
           </p>
 
-          {/* Blog Tags - FIXED */}
+          {/* Blog Tags */}
           {tags.length > 0 && (
             <div className="blog-tags">
               {tags.slice(0, 3).map((tag, tagIndex) => (

@@ -297,6 +297,9 @@ const Blogs = () => {
 
 // Blog Card Component
 const BlogCard = ({ blog, featured = false, viewMode = 'grid', index = 0, isLocalData = false, onBlogClick }) => {
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
+
   const formatDate = (dateString) => {
     try {
       return new Date(dateString).toLocaleDateString('en-US', {
@@ -316,6 +319,17 @@ const BlogCard = ({ blog, featured = false, viewMode = 'grid', index = 0, isLoca
     return imageUrl;
   };
 
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+    setImageError(false);
+  };
+
+  const handleImageError = (e) => {
+    setImageError(true);
+    setImageLoaded(true);
+    e.target.src = 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
+  };
+
   return (
     <motion.div
       className={`blog-card ${featured ? 'featured' : ''} ${viewMode}`}
@@ -324,17 +338,25 @@ const BlogCard = ({ blog, featured = false, viewMode = 'grid', index = 0, isLoca
       transition={{ delay: index * 0.1, duration: 0.5 }}
       whileHover={{ y: -5 }}
       layout
-      onClick={() => onBlogClick(blog)}
-      style={{ cursor: 'pointer' }}
+      onClick={() => onBlogClick && onBlogClick(blog)}
+      style={{ cursor: onBlogClick ? 'pointer' : 'default' }}
     >
       {/* Blog Image */}
       <div className="blog-image">
+        {!imageLoaded && !imageError && (
+          <div className="image-placeholder">
+            <BookOpen size={32} />
+          </div>
+        )}
         <img 
           src={getImageUrl(blog.image)} 
           alt={blog.title}
           loading="lazy"
-          onError={(e) => {
-            e.target.src = 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
+          onLoad={handleImageLoad}
+          onError={handleImageError}
+          style={{ 
+            opacity: imageLoaded ? 1 : 0,
+            display: imageError ? 'block' : 'block'
           }}
         />
         <div className="image-overlay"></div>
@@ -354,9 +376,9 @@ const BlogCard = ({ blog, featured = false, viewMode = 'grid', index = 0, isLoca
         <h3 className="blog-title">{blog.title}</h3>
         
         <p className="blog-excerpt">
-          {blog.excerpt || (blog.content.length > 120 
+          {blog.excerpt || (blog.content && blog.content.length > 120 
             ? `${blog.content.substring(0, 120)}...` 
-            : blog.content)
+            : blog.content || 'No content available')
           }
         </p>
 
@@ -390,6 +412,7 @@ const BlogCard = ({ blog, featured = false, viewMode = 'grid', index = 0, isLoca
     </motion.div>
   );
 };
+
 
 // Blog Modal Component
 const BlogModal = ({ blog, isOpen, onClose }) => {

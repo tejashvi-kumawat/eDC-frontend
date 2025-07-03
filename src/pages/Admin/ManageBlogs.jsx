@@ -29,7 +29,7 @@ import ErrorMessage from '../../components/ErrorMessage';
 import { getMediaUrl } from '../../services/api';
 
 // Styles
-import '../../styles/ManageBlogs.css';
+// import '../../styles/ManageBlogs.css';
 
 const ManageBlogs = () => {
   const [searchTerm, setSearchTerm] = useState('');

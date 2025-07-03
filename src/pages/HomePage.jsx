@@ -31,8 +31,8 @@ import {
 // Components - COMMENTED OUT
 // import LoadingSpinner from '../components/LoadingSpinner';
 // import ErrorMessage from '../components/ErrorMessage';
-// import EventCard from '../components/EventCard';
-// import BlogCard from '../components/BlogCard';
+import EventCard from '../components/EventCard';
+import BlogCard from '../components/BlogCard';
 
 // Local Data
 import { localEventsData } from '../data/eventsData';
@@ -449,7 +449,7 @@ const HomePage = () => {
               <div className="blogs-grid">
                 {featuredBlogs.slice(0, 3).map((blog, index) => (
                   <div key={blog.id} data-aos="fade-up" data-aos-delay={index * 100}>
-                    <BlogCard blog={blog} index={index} isLocalData={true} />
+                    <BlogCard blog={blog} index={index} isLocalData={true} featured={true} viewMode="grid"/>
                   </div>
                 ))}
               </div>
@@ -547,126 +547,6 @@ const HomePage = () => {
         </div>
       </section>
     </div>
-  );
-};
-
-// Event Card Component (Inline since we commented out the import)
-const EventCard = ({ event, index = 0, isLocalData = false }) => {
-  const formatDate = (dateString) => {
-    try {
-      return new Date(dateString).toLocaleDateString('en-US', {
-        weekday: 'short',
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric'
-      });
-    } catch {
-      return 'Date TBD';
-    }
-  };
-
-  const getImageUrl = (imageUrl) => {
-    if (isLocalData) {
-      return imageUrl || '/events/default-event.jpg';
-    }
-    return imageUrl;
-  };
-
-  return (
-    <motion.div
-      className="event-card featured"
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.1, duration: 0.5 }}
-      whileHover={{ y: -5 }}
-    >
-      <div className="event-image">
-        <img 
-          src={getImageUrl(event.image)} 
-          alt={event.title}
-          loading="lazy"
-          onError={(e) => {
-            e.target.src = 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
-          }}
-        />
-        <div className="image-overlay"></div>
-        <div className="event-type">{event.event_type}</div>
-      </div>
-
-      <div className="event-content">
-        <h3 className="event-title">{event.title}</h3>
-        <p className="event-description">
-          {event.description.length > 100 
-            ? `${event.description.substring(0, 100)}...` 
-            : event.description
-          }
-        </p>
-        <div className="event-meta">
-          <span className="event-date">{formatDate(event.start_datetime)}</span>
-          <span className="event-location">{event.location}</span>
-        </div>
-      </div>
-    </motion.div>
-  );
-};
-
-// Blog Card Component (Inline since we commented out the import)
-const BlogCard = ({ blog, index = 0, isLocalData = false }) => {
-  const formatDate = (dateString) => {
-    try {
-      return new Date(dateString).toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric'
-      });
-    } catch {
-      return 'Date TBD';
-    }
-  };
-
-  const getImageUrl = (imageUrl) => {
-    if (isLocalData) {
-      return imageUrl || '/blogs/default-blog.jpg';
-    }
-    return imageUrl;
-  };
-
-  return (
-    <motion.div
-      className="blog-card featured"
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.1, duration: 0.5 }}
-      whileHover={{ y: -5 }}
-    >
-      <div className="blog-image">
-        <img 
-          src={getImageUrl(blog.image)} 
-          alt={blog.title}
-          loading="lazy"
-          onError={(e) => {
-            e.target.src = 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
-          }}
-        />
-        <div className="image-overlay"></div>
-        <div className="blog-category">{blog.category}</div>
-      </div>
-
-      <div className="blog-content">
-        <h3 className="blog-title">{blog.title}</h3>
-        <p className="blog-excerpt">
-          {blog.excerpt || (blog.content.length > 100 
-            ? `${blog.content.substring(0, 100)}...` 
-            : blog.content)
-          }
-        </p>
-        <div className="blog-meta">
-          <span className="blog-author">{blog.author}</span>
-          <span className="blog-date">{formatDate(blog.created_at)}</span>
-          <span className="blog-read-time">{blog.read_time} min read</span>
-        </div>
-      </div>
-    </motion.div>
   );
 };
 

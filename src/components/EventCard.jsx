@@ -12,17 +12,18 @@ import {
   AlertCircle
 } from 'lucide-react';
 import { format } from 'date-fns';
-import { getMediaUrl } from '../services/api';
 import '../styles/EventCard.css';
 
 const EventCard = ({ 
   event, 
   featured = false, 
   viewMode = 'grid', 
-  index = 0 
+  index = 0,
+  isLocalData = false
 }) => {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
 
   const getEventStatus = () => {
     const now = new Date();
@@ -62,13 +63,33 @@ const EventCard = ({
     return `${diffDays} days`;
   };
 
+  const getImageUrl = (imageUrl) => {
+    if (isLocalData) {
+      // Use placeholder images for local data
+      const placeholderImages = [
+        'https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+        'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+      ];
+      
+      // Use a different placeholder for each event based on its ID
+      const placeholderIndex = (event.id - 1) % placeholderImages.length;
+      return imageUrl || placeholderImages[placeholderIndex];
+    }
+    return imageUrl || 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
+  };
+
   const handleBookmark = (e) => {
     e.preventDefault();
+    e.stopPropagation();
     setIsBookmarked(!isBookmarked);
   };
 
   const handleShare = (e) => {
     e.preventDefault();
+    e.stopPropagation();
     if (navigator.share) {
       navigator.share({
         title: event.title,
@@ -76,6 +97,17 @@ const EventCard = ({
         url: window.location.origin + `/events/${event.id}`,
       });
     }
+  };
+
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+    setImageError(false);
+  };
+
+  const handleImageError = (e) => {
+    setImageError(true);
+    setImageLoaded(true);
+    e.target.src = 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
   };
 
   const status = getEventStatus();
@@ -87,15 +119,24 @@ const EventCard = ({
       data-aos="fade-up"
       data-aos-delay={index * 100}
     >
-      <Link to={`/events/${event.id}`} className="event-link">
+      <div className="event-link">
         {/* Event Image */}
         <div className="event-image">
+          {!imageLoaded && !imageError && (
+            <div className="image-placeholder">
+              <Calendar size={32} />
+            </div>
+          )}
           <img 
-            src={getMediaUrl(event.image) || 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'} 
+            src={getImageUrl(event.image)} 
             alt={event.title}
             loading="lazy"
-            onLoad={() => setImageLoaded(true)}
-            className={imageLoaded ? 'loaded' : ''}
+            onLoad={handleImageLoad}
+            onError={handleImageError}
+            style={{ 
+              opacity: imageLoaded ? 1 : 0,
+              display: 'block'
+            }}
           />
           <div className="image-overlay"></div>
           
@@ -178,38 +219,17 @@ const EventCard = ({
             </div>
           </div>
 
-          {/* Registration Deadline */}
-          {event.registration_deadline && status === 'upcoming' && (
-            <div className="registration-deadline">
-              <Clock size={14} />
-              <span>Register by {formatDate(event.registration_deadline)}</span>
-            </div>
-          )}
-
-          {/* Event Actions */}
+          {/* Event Actions - Removed registration */}
           <div className="event-actions">
-            {event.registration_link && status === 'upcoming' ? (
-              <a
-                href={event.registration_link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-primary"
-                onClick={(e) => e.stopPropagation()}
-              >
-                Register Now
-                <ExternalLink size={16} />
-              </a>
-            ) : (
-              <div className="btn btn-outline disabled">
-                {status === 'past' ? 'Event Ended' : 'Registration Closed'}
-              </div>
-            )}
+            <div className="btn btn-outline">
+              View Details
+            </div>
           </div>
         </div>
 
         {/* Hover Effect */}
         <div className="card-glow"></div>
-      </Link>
+      </div>
     </div>
   );
 };
