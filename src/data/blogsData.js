@@ -2,7 +2,7 @@
 export const localBlogsData = [
   {
     id: 1,
-    title: "The Future of Entrepreneurship: AI and Machine Learning",
+    title: "The Future of Entrepreneurship",
     content: "Artificial Intelligence and Machine Learning are revolutionizing the entrepreneurial landscape. From automating mundane tasks to providing deep insights into customer behavior, AI is becoming an indispensable tool for modern entrepreneurs. This comprehensive guide explores how startups can leverage AI technologies to gain competitive advantages, streamline operations, and create innovative solutions that address real-world problems. We'll dive into practical applications, case studies, and actionable strategies that every entrepreneur should know.",
     excerpt: "Discover how AI and ML are transforming the startup ecosystem and learn practical strategies to implement these technologies in your business.",
     category: "Technology",
