@@ -2,98 +2,152 @@
 export const localInitiativesData = [
   {
     id: 1,
-    title: "AI Innovation Lab",
-    description: "A cutting-edge research initiative focused on developing artificial intelligence solutions for real-world problems. This lab brings together students, faculty, and industry experts to work on breakthrough AI technologies.",
-    detailed_description: "The AI Innovation Lab serves as a hub for artificial intelligence research and development at eDC IITD. Our team works on machine learning algorithms, natural language processing, computer vision, and robotics applications that can transform industries and improve lives.",
-    image: "/initiatives/ai-innovation-lab.jpg",
-    start_date: "2024-01-15",
-    end_date: null,
-    is_ongoing: true,
-    is_featured: true,
-    impact_metrics: "50+ AI models developed, 25 research papers published, 15 industry partnerships established"
+    title: "Venture Studio",
+    description: "A comprehensive full-semester course designed to teach entrepreneurship through hands-on experience. Learn from distinguished alumni who are successful founders themselves through bi-weekly sessions and active mentoring.",
+    detailed_description: "IIT Delhi has always been renowned for its students building one unicorn after another. The Entrepreneurship Development Cell (eDC) IIT Delhi presents Venture Studio - a comprehensive program that teaches entrepreneurship through hands-on experience. Through bi-weekly sessions and active mentoring from our distinguished alumni who are successful founders themselves, participants will learn key entrepreneurship concepts while gaining real-world insights. Now in its third edition, Venture Studio promises to be an enhanced learning platform for budding entrepreneurs and IIT Delhi students.",
+    // image: "/initiatives/venture-studio.jpg",
+    // start_date: "2024-01-15",
+    // end_date: null,
+    // is_ongoing: true,
+    // is_featured: true,
+    impact_metrics: "3 successful cohorts completed, 12+ industry mentors, 50+ students trained in entrepreneurship fundamentals",
+    mentors: [
+      "Pawan Raj Kumar",
+      "Alok Mittal", 
+      "Vivek Srivastava",
+      "Shivani Singh-Kapoor",
+      "Priyank Garg",
+      "Pankaj Vermani",
+      "Tejinderpal Miglani",
+      "Dipinder Sekhon",
+      "Gaurav Agarwal",
+      "Hitesh Oberoi",
+      "Gaurav Bhatnagar",
+      "Ganesh Sahai"
+    ],
+    learning_outcomes: [
+      "Fundamental entrepreneurship concepts",
+      "Startup building methodologies", 
+      "Business strategy and execution",
+      "Real-world problem-solving approaches",
+      "Networking and mentorship opportunities"
+    ]
   },
   {
     id: 2,
-    title: "Sustainable Tech Initiative",
-    description: "Developing eco-friendly technology solutions to address climate change and environmental challenges. This initiative focuses on creating sustainable alternatives to traditional tech solutions.",
-    detailed_description: "Our Sustainable Tech Initiative is committed to developing environmentally responsible technology solutions. We work on renewable energy systems, waste reduction technologies, and sustainable manufacturing processes.",
-    image: "/initiatives/sustainable-tech.jpg",
-    start_date: "2023-08-20",
-    end_date: "2024-06-30",
-    is_ongoing: false,
-    is_featured: true,
-    impact_metrics: "30% reduction in campus energy consumption, 5 green tech patents filed, 100+ students trained"
+    title: "Industrial Visits",
+    description: "Providing students with invaluable real-world exposure to how startups and established companies operate beyond theoretical classroom learning through carefully curated industry visits.",
+    detailed_description: "Industrial Visits is a flagship initiative by eDC designed to provide students with invaluable real-world exposure to how startups and established companies operate beyond theoretical classroom learning. These carefully curated visits help participants observe business processes, product development cycles, manufacturing workflows, and organizational culture across various industries. Students gain deeper understanding of how innovative ideas translate into functioning enterprises through direct interaction with founders, engineers, and industry professionals.",
+    // image: "/initiatives/industrial-visits.jpg",
+    // start_date: "2023-08-01",
+    // end_date: null,
+    // is_ongoing: true,
+    // is_featured: true,
+    impact_metrics: "25+ company visits organized, 200+ students participated, 15+ industry partnerships established",
+    key_benefits: [
+      "Bridge the gap between theoretical learning and practical execution",
+      "Gain insights into entrepreneurial and industrial ecosystems",
+      "Understand manufacturing processes and product development",
+      "Network with industry professionals and founders",
+      "Explore cutting-edge technologies and innovations"
+    ],
+    recent_highlights: [
+      {
+        company: "TSUYO MANUFACTURING PVT LTD",
+        focus: "EV powertrains manufacturing processes",
+        description: "Students explored cutting-edge manufacturing processes with special focus on EV powertrains, gaining hands-on experience in design, production, and testing of electric vehicle powertrains."
+      }
+    ]
   },
   {
     id: 3,
-    title: "Digital Health Platform",
-    description: "Building comprehensive digital health solutions to improve healthcare accessibility and quality. This platform integrates telemedicine, health monitoring, and data analytics.",
-    detailed_description: "The Digital Health Platform aims to revolutionize healthcare delivery through technology. We develop mobile health applications, wearable device integrations, and AI-powered diagnostic tools.",
-    image: "/initiatives/digital-health.jpg",
-    start_date: "2023-11-10",
-    end_date: null,
-    is_ongoing: true,
-    is_featured: false,
-    impact_metrics: "10,000+ patients served, 95% user satisfaction rate, 20 healthcare partnerships"
+    title: "Founder's Club",
+    description: "A prestigious initiative jointly organized by Google Cloud, IIT Delhi Alumni Association, and eDC featuring fireside chats, startup pitches, and extensive networking opportunities with the IIT Delhi alumni community.",
+    detailed_description: "The Founder's Club Launch is a prestigious initiative jointly organized by Google Cloud, IIT Delhi Alumni Association, and eDC. This exclusive platform features fireside chats, startup pitches, and extensive networking opportunities with the IIT Delhi alumni community. The event provides unprecedented access to Google Cloud resources and the IIT Delhi alumni network, offering both technical support and strategic guidance for aspiring entrepreneurs.",
+    // image: "/initiatives/founders-club.jpg",
+    // start_date: "2024-11-30",
+    // end_date: "2024-11-30",
+    // is_ongoing: false,
+    // is_featured: true,
+    impact_metrics: "50 students participated, $25K-$350K Google Cloud credits distributed, 20+ alumni mentors engaged",
+    event_details: {
+      date: "Saturday, November 30, 2024",
+      venue: "Seminar Hall, IIT Delhi",
+      capacity: "50 students (first-come, first-served basis)",
+      organizers: "Google Cloud × IIT Delhi Alumni Association × eDC"
+    },
+    schedule: [
+      {
+        time: "6:00 PM - 8:00 PM",
+        activity: "Fireside chats and startup pitches"
+      },
+      {
+        time: "8:00 PM onwards", 
+        activity: "Networking High Tea"
+      }
+    ],
+    key_speaker: {
+      name: "Priyank Garg",
+      designation: "Managing Partner, Indian Angel Network Alpha Fund"
+    },
+    benefits: [
+      {
+        category: "Bootstrapped Startups",
+        benefit: "Google Cloud credits worth $25,000 USD"
+      },
+      {
+        category: "Funded Startups", 
+        benefit: "Up to $250,000 USD in credits"
+      },
+      {
+        category: "AI Startups",
+        benefit: "Up to $350,000 USD in credits"
+      },
+      {
+        category: "Additional Benefits",
+        benefit: "Google Workspace Business Plus for 1 year, technical support and mentorship, $500 USD Google Cloud Skills Boost credits"
+      }
+    ]
   },
   {
     id: 4,
-    title: "Blockchain Research Center",
-    description: "Exploring blockchain technology applications in various domains including finance, supply chain, and governance. This center focuses on both theoretical research and practical implementations.",
-    detailed_description: "Our Blockchain Research Center investigates the potential of distributed ledger technologies across multiple industries. We develop smart contracts, consensus algorithms, and decentralized applications.",
-    image: "/initiatives/blockchain-research.jpg",
-    start_date: "2023-03-05",
-    end_date: "2024-03-05",
-    is_ongoing: false,
-    is_featured: false,
-    impact_metrics: "12 blockchain prototypes developed, 8 industry collaborations, 200+ developers trained"
-  },
-  {
-    id: 5,
-    title: "EdTech Innovation Hub",
-    description: "Creating next-generation educational technology solutions to enhance learning experiences. This hub develops interactive learning platforms, VR/AR educational content, and personalized learning systems.",
-    detailed_description: "The EdTech Innovation Hub is dedicated to transforming education through technology. We create immersive learning experiences, adaptive learning platforms, and tools that make education more accessible and engaging.",
-    image: "/initiatives/edtech-hub.jpg",
-    start_date: "2024-02-01",
-    end_date: null,
-    is_ongoing: true,
-    is_featured: true,
-    impact_metrics: "500+ students impacted, 15 educational apps launched, 90% improvement in learning outcomes"
-  },
-  {
-    id: 6,
-    title: "Smart City Solutions",
-    description: "Developing intelligent urban infrastructure solutions including IoT sensors, traffic management systems, and smart utilities. This initiative aims to create more efficient and livable cities.",
-    detailed_description: "Our Smart City Solutions initiative works on creating intelligent urban ecosystems. We develop IoT networks, smart traffic systems, waste management solutions, and energy-efficient infrastructure.",
-    image: "/initiatives/smart-city.jpg",
-    start_date: "2023-06-15",
-    end_date: null,
-    is_ongoing: true,
-    is_featured: false,
-    impact_metrics: "3 pilot cities implemented, 40% traffic efficiency improvement, 25% energy savings achieved"
-  },
-  {
-    id: 7,
-    title: "Cybersecurity Research Lab",
-    description: "Advanced cybersecurity research focusing on threat detection, prevention, and response systems. This lab develops cutting-edge security solutions for modern digital infrastructure.",
-    detailed_description: "The Cybersecurity Research Lab addresses the growing need for robust digital security. We research advanced threat detection algorithms, develop secure communication protocols, and create incident response systems.",
-    image: "/initiatives/cybersecurity-lab.jpg",
-    start_date: "2023-09-01",
-    end_date: "2024-08-31",
-    is_ongoing: false,
-    is_featured: false,
-    impact_metrics: "20 security vulnerabilities discovered, 5 security tools developed, 300+ professionals trained"
-  },
-  {
-    id: 8,
-    title: "Quantum Computing Initiative",
-    description: "Exploring quantum computing applications and developing quantum algorithms for complex problem-solving. This initiative bridges theoretical quantum physics with practical computing applications.",
-    detailed_description: "Our Quantum Computing Initiative explores the frontier of quantum technologies. We develop quantum algorithms, study quantum error correction, and investigate practical applications in cryptography and optimization.",
-    image: "/initiatives/quantum-computing.jpg",
-    start_date: "2024-01-01",
-    end_date: null,
-    is_ongoing: true,
-    is_featured: false,
-    impact_metrics: "5 quantum algorithms developed, 10 research collaborations, 2 quantum simulators built"
+    title: "eDC Bootcamp",
+    description: "An exclusive initiative designed specifically for eDC executives, focusing on upskilling, collaboration, and leadership development with deep dives into high-value domains like hardware design, PCB coding, and startup strategy.",
+    detailed_description: "The eDC Internal Bootcamp is an exclusive initiative designed specifically for eDC executives, focusing on upskilling, collaboration, and leadership development. This comprehensive program goes beyond surface-level skills to offer deep dives into high-value domains. The bootcamp is tailored to individual learning goals, whether technical or non-technical, providing specialized knowledge in areas such as hardware design, PCB coding, startup strategy, and other cutting-edge domains.",
+    // // image: "/initiatives/edc-bootcamp.jpg",
+    // start_date: "2024-02-01",
+    // end_date: null,
+    // is_ongoing: true,
+    // is_featured: false,
+    impact_metrics: "40+ executives trained, 25+ projects completed, 95% skill improvement rate, 15+ portfolio enhancements",
+    program_philosophy: "Learn. Build. Lead.",
+    program_features: [
+      {
+        feature: "Curated Learning Sessions",
+        description: "Customized based on your interests and career goals"
+      },
+      {
+        feature: "Hands-on Projects",
+        description: "Real-world projects with actual deadlines post-bootcamp"
+      },
+      {
+        feature: "Mentorship & Guidance", 
+        description: "Access to internal resources and experienced mentors"
+      },
+      {
+        feature: "Leadership Opportunities",
+        description: "Chance to lead and contribute to meaningful initiatives"
+      }
+    ],
+    specialization_areas: [
+      "Hardware design",
+      "PCB coding", 
+      "Startup strategy",
+      "Technical leadership",
+      "Project management",
+      "Innovation methodologies"
+    ],
+    program_impact: "Every executive will be assigned a project after completing the bootcamp. This serves as your runway to grow professionally, contribute meaningfully to the organization, and build an outstanding portfolio before the semester ends.",
+    mission_statement: "At eDC, we don't just execute—we excel. This bootcamp represents our commitment to developing leaders who can drive innovation and create lasting impact in the entrepreneurial ecosystem."
   }
 ];
