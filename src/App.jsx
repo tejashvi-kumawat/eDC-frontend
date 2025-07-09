@@ -20,6 +20,7 @@ import Blogs from './pages/Blogs';
 import Contact from './pages/Contact';
 import Calendar from './pages/Calendar';
 import FireStrip from './components/FireStrip.jsx';
+import BECon from './pages/BECon';
 
 // // Admin Pages
 import AdminDashboard from './pages/Admin/Dashboard';
@@ -75,6 +76,7 @@ function App() {
               <Route path="/blogs" element={<Blogs />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/calendar" element={<Calendar />} />
+              <Route path="/becon" element={<BECon />} />
               
               {/* Admin Routes */}
               {/* <Route path="/admin" element={<AdminDashboard />} />

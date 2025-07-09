@@ -28,6 +28,7 @@ const Navbar = () => {
     { path: '/initiatives', label: 'Initiatives' },
     { path: '/team', label: 'About Us' },
     { path: '/events', label: 'Events' },
+    { path: '/becon', label: 'BECon' },
     { path: '/opportunities', label: 'Opportunities' },
     { path: '/blogs', label: 'Blogs' },
     { path: '/calendar', label: 'Calendar' },
