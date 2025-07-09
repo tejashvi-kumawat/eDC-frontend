@@ -149,5 +149,56 @@ export const localInitiativesData = [
     ],
     program_impact: "Every executive will be assigned a project after completing the bootcamp. This serves as your runway to grow professionally, contribute meaningfully to the organization, and build an outstanding portfolio before the semester ends.",
     mission_statement: "At eDC, we don't just execute—we excel. This bootcamp represents our commitment to developing leaders who can drive innovation and create lasting impact in the entrepreneurial ecosystem."
+  },
+  {
+    id: 5,
+    title: "Trend Talks",
+    description: "A student-led initiative that bridges the gap between classroom theory and industry reality through conversational sessions with industry professionals and experienced speakers.",
+    detailed_description: "Trend Talks is a student-led initiative born from the CR Vertical of eDC IIT Delhi that breaks down the walls between classroom theory and industry reality. Unlike traditional seminars, Trend Talks focuses on genuine conversations where students can interrupt, question, and engage with speakers who have real-world experience. The initiative creates a space where curiosity meets experience, helping students understand what they'll actually be doing in their careers beyond academic learning.",
+    image: "/initiatives/trend-talks.jpg",
+    start_date: "2024-03-01",
+    end_date: null,
+    is_ongoing: true,
+    is_featured: true,
+    impact_metrics: "Multiple sessions conducted, genuine connections formed between speakers and students, mentorship opportunities created",
+    key_features: [
+      {
+        feature: "Discussion-Heavy Format",
+        description: "No PowerPoint marathons, just genuine conversations and Q&A sessions"
+      },
+      {
+        feature: "Interactive Environment",
+        description: "Students can interrupt, question, and respectfully disagree during sessions"
+      },
+      {
+        feature: "Practical Insights",
+        description: "Real-world knowledge that textbooks simply can't provide"
+      },
+      {
+        feature: "Networking Opportunities",
+        description: "Speakers often become mentors, students find study groups and internship opportunities"
+      }
+    ],
+    upcoming_features: [
+      "Polls and story votes for democratic topic selection",
+      "Pre-session previews to help students prepare",
+      "Alumni stories and senior student experiences",
+      "Digital whiteboards for interactive sessions",
+      "Short segment leads to maintain engagement"
+    ],
+    target_audience: [
+      "First-year students exploring career paths",
+      "Final-year students preparing for corporate life",
+      "Students across all departments seeking industry insights",
+      "Anyone curious about real-world applications of their studies"
+    ],
+    program_philosophy: "Questions are more valuable than answers, and curiosity should meet experience in an accessible environment",
+    outreach_channels: [
+      "Instagram stories",
+      "LinkedIn posts", 
+      "Email newsletters",
+      "Student ambassadors network"
+    ],
+    mission_statement: "Trend Talks fills the gap between 'What am I studying?' and 'What will I actually be doing?' by creating a space where trends aren't just followed—they're understood, questioned, and sometimes even challenged."
   }
 ];

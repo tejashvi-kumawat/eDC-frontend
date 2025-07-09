@@ -19,7 +19,8 @@ import {
 } from 'lucide-react';
 
 // Hooks
-import { useTeam, useDashboardStats } from '../hooks/useApi';
+import { useDashboardStats } from '../hooks/useApi';
+import { localTeamData } from '../data/teamData';
 
 // Components
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -29,13 +30,9 @@ import TeamMemberCard from '../components/Team/TeamMemberCard';
 import '../styles/About.css';
 
 const About = () => {
-  const { data: teamData, isLoading: teamLoading } = useTeam();
   const { data: stats, isLoading: statsLoading } = useDashboardStats();
 
-  const teamMembers = teamData?.data?.results || teamData?.data || [];
-  const coreTeam = teamMembers.filter(member => 
-    ['President', 'Vice President', 'Secretary', 'Treasurer'].includes(member.position)
-  ).slice(0, 4);
+  const teamGroups = localTeamData;
 
   const [missionRef, missionInView] = useIntersectionObserver({
     threshold: 0.1,
@@ -118,7 +115,7 @@ const About = () => {
     { year: '2025', event: 'AI & Tech Focus', description: 'Expanded focus to emerging technologies and AI' }
   ];
 
-  if (teamLoading || statsLoading) {
+  if (statsLoading) {
     return <LoadingSpinner message="Loading about information..." />;
   }
 
@@ -347,34 +344,29 @@ const About = () => {
         </div>
       </section>
 
-      {/* Core Team Preview */}
-      {coreTeam.length > 0 && (
-        <section className="core-team-preview">
-          <div className="container">
-            <div className="section-header">
-              <h2>Meet Our Leadership</h2>
-              <p>The passionate individuals leading eDC IITD</p>
-            </div>
-            
-            <div className="core-team-grid">
-              {coreTeam.map((member, index) => (
-                <TeamMemberCard
-                  key={member.id}
-                  member={member}
-                  index={index}
-                />
-              ))}
-            </div>
-            
-            <div className="team-cta">
-              <Link to="/team" className="btn btn-primary btn-lg">
-                Meet Our Full Team
-                <ArrowRight size={20} />
-              </Link>
-            </div>
+      {/* Team Section - Grouped by Vertical */}
+      <section className="team-section-grouped">
+        <div className="container">
+          <div className="section-header">
+            <h2>Meet Our Team</h2>
+            <p>The passionate coordinators driving eDC IITD</p>
           </div>
-        </section>
-      )}
+          {teamGroups.map((group, groupIdx) => (
+            <div key={group.vertical} className="team-vertical-group">
+              <h3 className="vertical-heading">{group.vertical}</h3>
+              <div className="team-grid">
+                {group.coordinators.map((member, idx) => (
+                  <TeamMemberCard
+                    key={member.id}
+                    member={member}
+                    index={idx}
+                  />
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
 
       {/* Call to Action */}
       <section className="about-cta">
