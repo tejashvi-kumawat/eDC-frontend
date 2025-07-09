@@ -12,9 +12,7 @@ export const localBlogsData = blogs.map((blog, idx) => ({
   created_at: new Date(blog.published).toISOString(),
   views_count: 0,
   read_time: Math.max(3, Math.round((blog.content.split(' ').length || 0) / 200)),
-  // is_featured: false,
-  // image: '',
-  // tags: [],
+  is_featured: idx < 3,
   likes_count: 0,
   link: blog.link
 }));

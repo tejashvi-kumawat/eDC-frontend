@@ -1,0 +1,96 @@
+.main-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(18, 18, 18, 0.85);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.main-modal-content {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-primary);
+  max-width: 700px;
+  min-width: 340px;
+  width: 90vw;
+  max-height: 90vh;
+  min-height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+  padding: 2.5rem 2rem 2rem 2rem;
+  box-shadow: var(--shadow-xl);
+  backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  animation: modalZoomIn 0.28s cubic-bezier(0.4,0,0.2,1);
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.main-modal-content img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Always show scrollbar for modal content */
+.main-modal-content::-webkit-scrollbar {
+  width: 10px;
+}
+.main-modal-content::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 6px;
+}
+.main-modal-content::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+@keyframes modalZoomIn {
+  0% { transform: scale(0.85); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.modal-close {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.2rem;
+  background: rgba(0,0,0,0.15);
+  border: none;
+  font-size: 2rem;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  z-index: 10;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+
+.modal-close:hover {
+  background: rgba(255,255,255,0.08);
+  color: var(--primary);
+  transform: scale(1.1);
+}
+
+@media (max-width: 700px) {
+  .main-modal-content {
+    max-width: 98vw;
+    min-width: 0;
+    width: 98vw;
+    padding: 1.2rem 0.5rem 1.2rem 0.5rem;
+    border-radius: var(--radius-md);
+  }
+} 
