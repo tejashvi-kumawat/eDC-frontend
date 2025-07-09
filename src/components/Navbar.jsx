@@ -50,10 +50,7 @@ const Navbar = () => {
     <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
       <div className="nav-container">
         <Link to="/" className="nav-logo">
-          <div className="logo-icon">
-            <span>eDC</span>
-          </div>
-          <span className="logo-text">IITD</span>
+          <img src="/custom-logo.png" alt="Custom Logo" style={{ height: '72px', width: 'auto' }} />
         </Link>
 
         <div className="nav-menu">
