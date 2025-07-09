@@ -237,31 +237,28 @@ const HomePage = () => {
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 1 }}
-              style={{ y: y2, opacity }}
+              style={{ y: y2, opacity, display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}
             >
-              <div className="stats-container">
-                <div className="stat-item">
-                  <div className="stat-icon">
-                    <Rocket size={24} />
-                  </div>
-                  <span className="stat-number">500+</span>
-                  <span className="stat-label">Active Members</span>
-                </div>
-                <div className="stat-item">
-                  <div className="stat-icon">
-                    <Calendar size={24} />
-                  </div>
-                  <span className="stat-number">100+</span>
-                  <span className="stat-label">Events</span>
-                </div>
-                <div className="stat-item">
-                  <div className="stat-icon">
-                    <Award size={24} />
-                  </div>
-                  <span className="stat-number">50+</span>
-                  <span className="stat-label">Startups</span>
-                </div>
-              </div>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.97 }}
+                style={{
+                  width: 'min(440px, 80vw)',
+                  height: 'min(440px, 80vw)',
+                  borderRadius: '50%',
+                  background: 'rgba(30, 30, 30, 0.92)',
+                  boxShadow: '0 4px 32px 0 rgba(0,0,0,0.18)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  margin: '0 auto',
+                  border: '4px solid #ffd700',
+                  transition: 'box-shadow 0.2s',
+                  padding: '0',
+                }}
+              >
+                <img src="/custom-logo.png" alt="eDC IIT Delhi Logo" style={{ width: '80%', height: '80%', objectFit: 'contain', display: 'block' }} />
+              </motion.div>
             </motion.div>
           </div>
         </div>
