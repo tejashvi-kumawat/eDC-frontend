@@ -79,27 +79,7 @@ const HomePage = () => {
       gradient: 'linear-gradient(135deg, #32d74b 0%, #28a745 100%)',
       delay: 0.1
     },
-    {
-      icon: Lightbulb,
-      title: 'Startup Incubation',
-      description: 'Providing resources, mentorship, and funding opportunities to turn ideas into successful startups.',
-      gradient: 'linear-gradient(135deg, #007aff 0%, #0056b3 100%)',
-      delay: 0.2
-    },
-    {
-      icon: TrendingUp,
-      title: 'Growth Acceleration',
-      description: 'Accelerating growth through strategic partnerships, networking, and industry connections.',
-      gradient: 'linear-gradient(135deg, #ff9f0a 0%, #ff8c00 100%)',
-      delay: 0.3
-    },
-    {
-      icon: Rocket,
-      title: 'Future Building',
-      description: 'Empowering students to build the next generation of technology companies and solutions.',
-      gradient: 'linear-gradient(135deg, #af52de 0%, #8e44ad 100%)',
-      delay: 0.4
-    }
+    
   ];
 
   const achievements = [
@@ -307,46 +287,17 @@ const HomePage = () => {
             animate={featuresInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="gradient-text">What We Do</h2>
-            <p>Empowering the next generation of entrepreneurs and innovators</p>
+            <h2 className="gradient-text">About eDC</h2>
+            <p> </p>
           </motion.div>
-          
-          <div className="features-grid">
-            {features.map((feature, index) => {
-              const IconComponent = feature.icon;
-              return (
-                <motion.div
-                  key={feature.title}
-                  className="feature-card"
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={featuresInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ delay: feature.delay, duration: 0.6 }}
-                  whileHover={{ 
-                    y: -10, 
-                    scale: 1.02,
-                    rotateY: 5,
-                    rotateX: 5 
-                  }}
-                  data-aos="fade-up"
-                  data-aos-delay={index * 100}
-                >
-                  <div className="feature-glow"></div>
-                  <div className="feature-icon-wrapper">
-                    <div 
-                      className="feature-icon"
-                      style={{ background: feature.gradient }}
-                    >
-                      <IconComponent size={32} />
-                    </div>
-                  </div>
-                  <div className="feature-content">
-                    <h3>{feature.title}</h3>
-                    <p>{feature.description}</p>
-                  </div>
-                  <div className="feature-overlay"></div>
-                </motion.div>
-              );
-            })}
+          {/* Description placeholder, remove the features grid */}
+          <div className="about-description" style={{ marginTop: '2rem', textAlign: 'center', fontSize: '1.2rem' }}>
+            <p>
+              {/* TODO: Replace this with your actual description */}
+              The Entrepreneurship Development Cell (eDC) of IIT Delhi, established in January 2007, is committed to fostering a culture of innovation and entrepreneurship within the student community. With a focus on providing the right resources, mentorship, and support, EDC aims to bridge the gap between innovative ideas and the real-world startup ecosystem.eDC also focuses on cultivating a startup-friendly environment on campus, where creativity, critical thinking, and collaborative efforts thrive. Through a combination of hands-on experiences and expert guidance, eDC empowers students to become change-makers, driving the future of innovation and business.
+
+
+            </p>
           </div>
         </div>
       </section>
