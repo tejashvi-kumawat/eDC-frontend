@@ -169,13 +169,6 @@ const Footer = () => {
             </p>
           </div>
           
-          <button 
-            className="scroll-to-top"
-            onClick={scrollToTop}
-            aria-label="Scroll to top"
-          >
-            <ArrowUp size={20} />
-          </button>
         </div>
       </div>
     </footer>
