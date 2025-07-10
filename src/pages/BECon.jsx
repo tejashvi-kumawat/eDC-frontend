@@ -1,5 +1,5 @@
 import React from 'react';
-import './BECon.css';
+import '../styles/BECon.css';
 
 const BECon = () => {
   return (

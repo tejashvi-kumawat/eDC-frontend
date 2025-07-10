@@ -387,7 +387,7 @@ const HomePage = () => {
           <div className="section-header" data-aos="fade-up">
             <h2 className="gradient-text">
               <BookOpen size={32} />
-              Featured Articles
+              Featured Blogs
             </h2>
             <p>Insights and stories from our community</p>
           </div>
@@ -397,13 +397,23 @@ const HomePage = () => {
               <div className="blogs-grid">
                 {featuredBlogs.slice(0, 3).map((blog, index) => (
                   <div key={blog.id} data-aos="fade-up" data-aos-delay={index * 100}>
-                    <BlogCard blog={blog} index={index} isLocalData={true} featured={true} viewMode="grid"/>
+                    <BlogCard 
+                      blog={blog} 
+                      index={index} 
+                      isLocalData={true} 
+                      featured={true} 
+                      viewMode="grid"
+                      onBlogClick={(blog) => {
+                        // Navigate to blogs page with the specific blog
+                        window.location.href = `/blogs?blog=${blog.id}`;
+                      }}
+                    />
                   </div>
                 ))}
               </div>
               <div className="section-cta" data-aos="fade-up">
                 <Link to="/blogs" className="btn btn-outline btn-lg">
-                  Read More Articles
+                  Read More Blogs
                   <ArrowRight size={20} />
                 </Link>
               </div>
@@ -411,7 +421,7 @@ const HomePage = () => {
           ) : (
             <div className="no-content" data-aos="fade-up">
               <BookOpen size={64} />
-              <h3>No featured articles available</h3>
+              <h3>No featured blogs available</h3>
               <p>Stay tuned for inspiring stories and insights!</p>
             </div>
           )}

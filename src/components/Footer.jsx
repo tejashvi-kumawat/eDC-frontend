@@ -28,7 +28,7 @@ const Footer = () => {
     { name: 'Blogs', path: '/blogs' },
     { name: 'Calendar', path: '/calendar' },
     { name: 'Contact', path: '/contact' },
-    { name: 'Admin', path: '/admin' },
+    { name: 'BECon', path: '/becon' },
   ];
 
   const socialLinks = [

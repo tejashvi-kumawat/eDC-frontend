@@ -13,7 +13,8 @@ import {
   Award,
   ArrowRight,
   Star,
-  Zap
+  Zap,
+  X
 } from 'lucide-react';
 
 // Hooks - COMMENTED OUT
@@ -34,6 +35,7 @@ const Initiatives = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [sortBy, setSortBy] = useState('recent');
+  const [selectedInitiative, setSelectedInitiative] = useState(null);
   
   // API Hook - COMMENTED OUT
   // const { data: initiativesData, isLoading, error } = useInitiatives();
@@ -84,6 +86,14 @@ const Initiatives = () => {
   const ongoingCount = initiatives.filter(i => i.is_ongoing).length;
   const completedCount = initiatives.filter(i => !i.is_ongoing).length;
   const featuredInitiatives = initiatives.filter(i => i.is_featured);
+
+  const handleLearnMore = (initiative) => {
+    setSelectedInitiative(initiative);
+  };
+
+  const closeInitiativeDetail = () => {
+    setSelectedInitiative(null);
+  };
 
   // Loading state - COMMENTED OUT
   // if (isLoading && !error) {
@@ -146,7 +156,12 @@ const Initiatives = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
                 >
-                  <InitiativeCard initiative={initiative} featured={true} isLocalData={true} />
+                  <InitiativeCard 
+                    initiative={initiative} 
+                    featured={true} 
+                    isLocalData={true}
+                    onLearnMore={handleLearnMore}
+                  />
                 </motion.div>
               ))}
             </div>
@@ -234,6 +249,7 @@ const Initiatives = () => {
                     initiative={initiative}
                     index={index}
                     isLocalData={true}
+                    onLearnMore={handleLearnMore}
                   />
                 ))}
               </motion.div>
@@ -241,12 +257,88 @@ const Initiatives = () => {
           </AnimatePresence>
         </div>
       </section>
+
+      {/* Initiative Detail Modal */}
+      <AnimatePresence>
+        {selectedInitiative && (
+          <motion.div
+            className="initiative-detail-modal"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={closeInitiativeDetail}
+          >
+            <motion.div
+              className="modal-content"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button className="close-button" onClick={closeInitiativeDetail}>
+                <X size={24} />
+              </button>
+              
+              <div className="modal-header">
+                <h2>{selectedInitiative.title}</h2>
+                <div className={`initiative-status ${selectedInitiative.is_ongoing ? 'ongoing' : 'completed'}`}>
+                  {selectedInitiative.is_ongoing ? (
+                    <>
+                      <Zap size={16} />
+                      Ongoing
+                    </>
+                  ) : (
+                    <>
+                      <CheckCircle size={16} />
+                      Completed
+                    </>
+                  )}
+                </div>
+              </div>
+              
+              <div className="modal-body">
+                <p className="initiative-description">{selectedInitiative.description}</p>
+                
+                {selectedInitiative.detailed_description && (
+                  <div className="detailed-description">
+                    <h3>Detailed Description</h3>
+                    <p>{selectedInitiative.detailed_description}</p>
+                  </div>
+                )}
+                
+                <div className="initiative-info">
+                  <div className="info-item">
+                    <Calendar size={16} />
+                    <span>Started: {new Date(selectedInitiative.start_date).toLocaleDateString()}</span>
+                  </div>
+                  {selectedInitiative.end_date && (
+                    <div className="info-item">
+                      <CheckCircle size={16} />
+                      <span>Ended: {new Date(selectedInitiative.end_date).toLocaleDateString()}</span>
+                    </div>
+                  )}
+                </div>
+                
+                {selectedInitiative.impact_metrics && (
+                  <div className="impact-metrics">
+                    <h3>
+                      <Award size={16} />
+                      Impact Metrics
+                    </h3>
+                    <p>{selectedInitiative.impact_metrics}</p>
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
 
 // Updated Initiative Card Component
-const InitiativeCard = ({ initiative, featured = false, index = 0, isLocalData = false }) => {
+const InitiativeCard = ({ initiative, featured = false, index = 0, isLocalData = false, onLearnMore }) => {
   const formatDate = (dateString) => {
     try {
       return new Date(dateString).toLocaleDateString('en-US', {
@@ -262,6 +354,14 @@ const InitiativeCard = ({ initiative, featured = false, index = 0, isLocalData =
   // Simplified image URL handling - only local data
   const getImageUrl = (imageUrl) => {
     return imageUrl || '/initiatives/default-initiative.jpg';
+  };
+
+  const handleLearnMoreClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (onLearnMore) {
+      onLearnMore(initiative);
+    }
   };
 
   return (
@@ -354,7 +454,7 @@ const InitiativeCard = ({ initiative, featured = false, index = 0, isLocalData =
 
         {/* Learn More Button */}
         <div className="initiative-actions">
-          <button className="btn btn-outline">
+          <button className="btn btn-outline" onClick={handleLearnMoreClick}>
             <span>Learn More</span>
             <ArrowRight size={16} />
           </button>

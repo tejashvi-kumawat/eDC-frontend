@@ -41,7 +41,7 @@
 }
 .event-details {
   display: flex;
-  gap: 2rem;
+  gap: 0.5rem;
   justify-content: center;
   font-size: 1.1rem;
   color: var(--accent);
@@ -142,7 +142,7 @@
 }
 .events-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
   margin-top: 2rem;
 }
@@ -150,7 +150,7 @@
   background: var(--bg-tertiary);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
-  padding: 2rem 1.5rem;
+  padding: 1rem 1rem;
   color: var(--text-primary);
   transition: box-shadow var(--transition-base), transform var(--transition-base);
 }

@@ -12,9 +12,10 @@ import ScrollToTop from './components/ScrollToTop';
 
 // Pages
 import HomePage from './pages/HomePage.jsx';
-import Initiatives from './pages/Initiatives';
+import Initiatives from './Pages/Initiatives';
 import Team from './pages/Team';
 import Events from './pages/Events';
+import EventDetail from './pages/EventDetail';
 import Opportunities from './pages/Opportunities';
 import Blogs from './pages/Blogs';
 import Contact from './pages/Contact';
@@ -32,6 +33,13 @@ import ManageTeam from './pages/Admin/ManageTeam';
 
 // Global Styles
 import './styles/globals.css';
+import './styles/Home.css';
+import './styles/BlogCard.css';
+import './styles/Events.css';
+import './styles/EventCard.css';
+import './styles/Footer.css';
+import './styles/EventDetail.css';
+import './styles/Initiatives.css';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -72,6 +80,7 @@ function App() {
               <Route path="/initiatives" element={<Initiatives />} />
               <Route path="/team" element={<Team />} />
               <Route path="/events" element={<Events />} />
+              <Route path="/events/:id" element={<EventDetail />} />
               <Route path="/opportunities" element={<Opportunities />} />
               <Route path="/blogs" element={<Blogs />} />
               <Route path="/contact" element={<Contact />} />

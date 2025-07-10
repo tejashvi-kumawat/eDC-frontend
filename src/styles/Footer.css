@@ -413,8 +413,7 @@
   }
   
   .footer-section:nth-child(1) {
-    grid-column: auto;
-    text-align: center;
+    grid-column: 1;
   }
   
   .social-links {
@@ -424,13 +423,15 @@
   .footer-bottom-content {
     flex-direction: column;
     text-align: center;
-    padding: 0 1rem;
+    gap: 1rem;
   }
   
   .scroll-to-top {
-    position: static;
+    position: relative;
+    right: auto;
+    top: auto;
     transform: none;
-    margin-top: 1rem;
+    margin: 0 auto;
   }
   
   .scroll-to-top:hover {
@@ -459,34 +460,30 @@
   }
 }
 
-/* 3D Hover Effects for Desktop */
 @media (hover: hover) {
   .footer-section {
-    transform-style: preserve-3d;
+    animation: none;
+    transform: none;
+    opacity: 1;
   }
   
   .footer-link:hover {
-    transform: translateX(8px) rotateY(2deg);
+    transform: translateX(8px);
   }
   
   .contact-item:hover {
-    transform: rotateX(2deg) rotateY(1deg);
+    transform: translateX(5px);
   }
 }
 
-/* Loading Animation */
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-/* Smooth transitions for all interactive elements */
+/* Ensure footer stays at bottom */
 .footer * {
-  transition: all var(--transition-base);
+  box-sizing: border-box;
 }

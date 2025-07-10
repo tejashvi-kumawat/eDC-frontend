@@ -1,54 +1,44 @@
-import React, { useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { 
   Calendar, 
   MapPin, 
   Clock, 
   Users, 
-  ExternalLink, 
   ArrowLeft,
   Share2,
   Bookmark,
-  User,
-  Phone,
-  Mail,
+  Star,
   AlertCircle,
-  CheckCircle,
-  Info
+  ExternalLink,
+  Tag,
+  User,
+  DollarSign
 } from 'lucide-react';
 import { format } from 'date-fns';
-
-// Hooks
-import { useEvent, useEvents } from '../hooks/useApi';
-
-// Components
-import LoadingSpinner from '../components/UI/LoadingSpinner';
-import ErrorMessage from '../components/UI/ErrorMessage';
-import EventCard from '../components/Events/EventCard';
-import { getMediaUrl } from '../services/api';
+import { localEventsData } from '../data/eventsData';
+import '../styles/EventDetail.css';
 
 const EventDetail = () => {
   const { id } = useParams();
-  const { data: event, isLoading, error } = useEvent(id);
-  const { data: relatedEventsData } = useEvents({ limit: 3 });
+  const navigate = useNavigate();
+  const [event, setEvent] = useState(null);
+  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
 
-  const eventData = event?.data;
-  const relatedEvents = relatedEventsData?.data?.results || relatedEventsData?.data || [];
-  const filteredRelatedEvents = relatedEvents
-    .filter(relatedEvent => relatedEvent.id !== parseInt(id))
-    .slice(0, 3);
-
-  // Scroll to top when component mounts
   useEffect(() => {
-    window.scrollTo(0, 0);
+    const foundEvent = localEventsData.find(e => e.id === parseInt(id));
+    if (foundEvent) {
+      setEvent(foundEvent);
+    }
   }, [id]);
 
-  const getEventStatus = () => {
-    if (!eventData) return 'unknown';
+  const getEventStatus = (event) => {
     const now = new Date();
-    const startDate = new Date(eventData.start_datetime);
-    const endDate = new Date(eventData.end_datetime);
+    const startDate = new Date(event.start_datetime);
+    const endDate = new Date(event.end_datetime);
 
     if (now < startDate) return 'upcoming';
     if (now > endDate) return 'past';
@@ -57,7 +47,7 @@ const EventDetail = () => {
 
   const formatDateTime = (dateString) => {
     try {
-      return format(new Date(dateString), 'EEEE, MMMM dd, yyyy \'at\' h:mm a');
+      return format(new Date(dateString), 'EEEE, MMMM dd, yyyy • h:mm a');
     } catch {
       return 'Date TBD';
     }
@@ -67,309 +57,371 @@ const EventDetail = () => {
     try {
       return format(new Date(dateString), 'MMM dd, yyyy');
     } catch {
-      return 'Date TBD';
+      return 'TBD';
     }
   };
 
-  const shareEvent = () => {
+  const getDaysUntil = () => {
+    const now = new Date();
+    const eventDate = new Date(event.start_datetime);
+    const diffTime = eventDate - now;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    
+    if (diffDays < 0) return null;
+    if (diffDays === 0) return 'Today';
+    if (diffDays === 1) return 'Tomorrow';
+    return `${diffDays} days`;
+  };
+
+  const getImageUrl = (imageUrl) => {
+    const placeholderImages = [
+      'https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    ];
+    
+    const placeholderIndex = (event.id - 1) % placeholderImages.length;
+    return imageUrl || placeholderImages[placeholderIndex];
+  };
+
+  const handleBookmark = () => {
+    setIsBookmarked(!isBookmarked);
+  };
+
+  const handleShare = () => {
     if (navigator.share) {
       navigator.share({
-        title: eventData.title,
-        text: eventData.description,
+        title: event.title,
+        text: event.description,
         url: window.location.href,
       });
     } else {
       navigator.clipboard.writeText(window.location.href);
-      // You could add a toast notification here
+      // You can add a toast notification here
     }
   };
 
-  const saveEvent = () => {
-    // Implement save/bookmark functionality
-    console.log('Event saved');
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+    setImageError(false);
   };
 
-  if (isLoading) return <LoadingSpinner />;
-  if (error || !eventData) return <ErrorMessage message="Event not found" />;
+  const handleImageError = (e) => {
+    setImageError(true);
+    setImageLoaded(true);
+    e.target.src = 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
+  };
 
-  const status = getEventStatus();
-  const isPast = status === 'past';
-  const isUpcoming = status === 'upcoming';
-  const isOngoing = status === 'ongoing';
+  if (!event) {
+    return (
+      <div className="event-detail-page">
+        <div className="container">
+          <div className="not-found">
+            <h2>Event Not Found</h2>
+            <p>The event you're looking for doesn't exist.</p>
+            <Link to="/events" className="btn btn-primary">
+              <ArrowLeft size={20} />
+              Back to Events
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const status = getEventStatus(event);
+  const daysUntil = getDaysUntil();
 
   return (
     <div className="event-detail-page">
-      {/* Back Navigation */}
-      <div className="container">
-        <motion.div
-          className="back-navigation"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <Link to="/events" className="back-link">
+      {/* Back Button */}
+      <div className="back-button-container">
+        <div className="container">
+          <button 
+            className="back-button"
+            onClick={() => navigate('/events')}
+          >
             <ArrowLeft size={20} />
             Back to Events
-          </Link>
-        </motion.div>
+          </button>
+        </div>
       </div>
 
-      {/* Event Header */}
-      <section className="event-header">
+      {/* Hero Section */}
+      <section className="event-hero">
+        <div className="hero-background">
+          {!imageLoaded && !imageError && (
+            <div className="image-placeholder">
+              <Calendar size={48} />
+            </div>
+          )}
+          <img 
+            src={getImageUrl(event.image)} 
+            alt={event.title}
+            onLoad={handleImageLoad}
+            onError={handleImageError}
+            style={{ 
+              opacity: imageLoaded ? 1 : 0,
+              display: 'block'
+            }}
+          />
+          <div className="hero-overlay"></div>
+        </div>
+        
         <div className="container">
-          <div className="event-header-content">
-            {/* Event Image */}
+          <div className="hero-content">
             <motion.div
-              className="event-image-section"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8 }}
-            >
-              <img 
-                src={getMediaUrl(eventData.image) || '/images/default-event.jpg'} 
-                alt={eventData.title}
-                className={isPast ? 'grayscale' : ''}
-              />
-              <div className="event-overlay">
-                <div className={`event-status ${status}`}>
-                  {isOngoing && <><CheckCircle size={16} /> Live Now</>}
-                  {isUpcoming && <><Clock size={16} /> Upcoming</>}
-                  {isPast && <><AlertCircle size={16} /> Past Event</>}
-                </div>
-                {eventData.is_featured && (
-                  <div className="featured-badge">Featured</div>
-                )}
-              </div>
-            </motion.div>
-
-            {/* Event Info */}
-            <motion.div
-              className="event-info-section"
-              initial={{ opacity: 0, y: 30 }}
+              className="hero-badges"
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              transition={{ delay: 0.2 }}
             >
-              {/* Event Type */}
-              <div className="event-type-badge">
-                {eventData.event_type}
+              <div className={`status-badge ${status}`}>
+                {status === 'ongoing' && <><div className="live-dot"></div>Live</>}
+                {status === 'upcoming' && <><Clock size={16} />Upcoming</>}
+                {status === 'past' && <><AlertCircle size={16} />Past</>}
               </div>
-
-              {/* Event Title */}
-              <h1 className="event-title">{eventData.title}</h1>
-
-              {/* Event Meta */}
-              <div className="event-meta">
-                <div className="meta-item">
-                  <Calendar size={20} />
-                  <div>
-                    <strong>Date & Time</strong>
-                    <p>{formatDateTime(eventData.start_datetime)}</p>
-                    {eventData.end_datetime && eventData.start_datetime !== eventData.end_datetime && (
-                      <p>Ends: {formatDateTime(eventData.end_datetime)}</p>
-                    )}
-                  </div>
-                </div>
-
-                <div className="meta-item">
-                  <MapPin size={20} />
-                  <div>
-                    <strong>Location</strong>
-                    <p>{eventData.location}</p>
-                    {eventData.venue_details && (
-                      <p className="venue-details">{eventData.venue_details}</p>
-                    )}
-                  </div>
-                </div>
-
-                {eventData.max_participants && (
-                  <div className="meta-item">
-                    <Users size={20} />
-                    <div>
-                      <strong>Capacity</strong>
-                      <p>{eventData.max_participants} participants</p>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Registration Info */}
-              {eventData.registration_deadline && isUpcoming && (
-                <div className="registration-info">
-                  <Clock size={16} />
-                  <span>Register by {formatDate(eventData.registration_deadline)}</span>
+              
+              {event.is_featured && (
+                <div className="featured-badge">
+                  <Star size={16} />
+                  Featured
                 </div>
               )}
-
-              {/* Event Actions */}
-              <div className="event-actions">
-                {eventData.registration_link && isUpcoming && (
-                  <a
-                    href={eventData.registration_link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn btn-primary btn-lg"
-                  >
-                    Register Now
-                    <ExternalLink size={20} />
-                  </a>
-                )}
-
-                <button 
-                  className="btn btn-outline"
-                  onClick={shareEvent}
-                >
-                  <Share2 size={18} />
-                  Share
-                </button>
-
-                <button 
-                  className="btn btn-outline"
-                  onClick={saveEvent}
-                >
-                  <Bookmark size={18} />
-                  Save
-                </button>
+              
+              <div className="type-badge">
+                {event.event_type}
               </div>
+            </motion.div>
+
+            <motion.h1
+              className="event-title"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              {event.title}
+            </motion.h1>
+
+            <motion.p
+              className="event-subtitle"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+            >
+              {event.description}
+            </motion.p>
+
+            <motion.div
+              className="hero-actions"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+            >
+              <button 
+                className={`action-btn bookmark-btn ${isBookmarked ? 'active' : ''}`}
+                onClick={handleBookmark}
+              >
+                <Bookmark size={20} fill={isBookmarked ? 'currentColor' : 'none'} />
+                {isBookmarked ? 'Bookmarked' : 'Bookmark'}
+              </button>
+              
+              <button 
+                className="action-btn share-btn"
+                onClick={handleShare}
+              >
+                <Share2 size={20} />
+                Share
+              </button>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Event Description */}
-      <section className="event-description-section">
-        <div className="container">
-          <motion.div
-            className="event-description"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            <h2>About This Event</h2>
-            <div className="description-content">
-              <p>{eventData.description}</p>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Event Details Grid */}
-      <section className="event-details-section">
+      {/* Event Details */}
+      <section className="event-details">
         <div className="container">
           <div className="details-grid">
-            {/* Event Information */}
-            <motion.div
-              className="details-card"
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-            >
-              <h3>
-                <Info size={24} />
-                Event Information
-              </h3>
-              <div className="info-list">
-                <div className="info-item">
-                  <strong>Type:</strong>
-                  <span>{eventData.event_type}</span>
+            {/* Main Content */}
+            <div className="main-content">
+              <motion.div
+                className="content-section"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
+              >
+                <h2>About This Event</h2>
+                <p className="event-description">{event.description}</p>
+              </motion.div>
+
+              {/* Event Information */}
+              <motion.div
+                className="content-section"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.7 }}
+              >
+                <h2>Event Information</h2>
+                <div className="info-grid">
+                  <div className="info-item">
+                    <Calendar size={20} />
+                    <div>
+                      <h4>Date & Time</h4>
+                      <p>{formatDateTime(event.start_datetime)}</p>
+                      {event.end_datetime && event.end_datetime !== event.start_datetime && (
+                        <p className="end-time">Ends: {formatDateTime(event.end_datetime)}</p>
+                      )}
+                    </div>
+                  </div>
+                  
+                  <div className="info-item">
+                    <MapPin size={20} />
+                    <div>
+                      <h4>Location</h4>
+                      <p>{event.location}</p>
+                    </div>
+                  </div>
+                  
+                  {event.max_participants && (
+                    <div className="info-item">
+                      <Users size={20} />
+                      <div>
+                        <h4>Capacity</h4>
+                        <p>{event.max_participants} participants</p>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {event.organizer && (
+                    <div className="info-item">
+                      <User size={20} />
+                      <div>
+                        <h4>Organizer</h4>
+                        <p>{event.organizer}</p>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {event.entry_fee !== undefined && (
+                    <div className="info-item">
+                      <DollarSign size={20} />
+                      <div>
+                        <h4>Entry Fee</h4>
+                        <p>{event.entry_fee === 0 ? 'Free' : `₹${event.entry_fee}`}</p>
+                      </div>
+                    </div>
+                  )}
                 </div>
-                <div className="info-item">
-                  <strong>Duration:</strong>
-                  <span>
-                    {(() => {
-                      try {
-                        const start = new Date(eventData.start_datetime);
-                        const end = new Date(eventData.end_datetime);
-                        const duration = Math.ceil((end - start) / (1000 * 60 * 60));
-                        return `${duration} hour${duration !== 1 ? 's' : ''}`;
-                      } catch {
-                        return 'TBD';
-                      }
-                    })()}
+              </motion.div>
+
+              {/* Requirements */}
+              {event.requirements && (
+                <motion.div
+                  className="content-section"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.8 }}
+                >
+                  <h2>Requirements</h2>
+                  <p>{event.requirements}</p>
+                </motion.div>
+              )}
+
+              {/* Tags */}
+              {event.tags && event.tags.length > 0 && (
+                <motion.div
+                  className="content-section"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.9 }}
+                >
+                  <h2>Tags</h2>
+                  <div className="tags-container">
+                    {event.tags.map((tag, index) => (
+                      <span key={index} className="tag">
+                        <Tag size={14} />
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+            </div>
+
+            {/* Sidebar */}
+            <div className="sidebar">
+              <motion.div
+                className="sidebar-card"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.8 }}
+              >
+                <h3>Event Status</h3>
+                <div className={`status-indicator ${status}`}>
+                  <div className="status-dot"></div>
+                  <span className="status-text">
+                    {status === 'ongoing' && 'Live Now'}
+                    {status === 'upcoming' && 'Upcoming'}
+                    {status === 'past' && 'Completed'}
                   </span>
                 </div>
-                {eventData.max_participants && (
-                  <div className="info-item">
-                    <strong>Max Participants:</strong>
-                    <span>{eventData.max_participants}</span>
+                
+                {daysUntil && status === 'upcoming' && (
+                  <div className="countdown">
+                    <Clock size={16} />
+                    <span>{daysUntil} until event</span>
                   </div>
                 )}
-                <div className="info-item">
-                  <strong>Status:</strong>
-                  <span className={`status-text ${status}`}>
-                    {status.charAt(0).toUpperCase() + status.slice(1)}
-                  </span>
-                </div>
-              </div>
-            </motion.div>
+              </motion.div>
 
-            {/* Contact Information */}
-            <motion.div
-              className="details-card"
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-            >
-              <h3>
-                <User size={24} />
-                Contact & Support
-              </h3>
-              <div className="contact-info">
-                <div className="contact-item">
-                  <Mail size={18} />
-                  <div>
-                    <strong>Email</strong>
-                    <a href="mailto:events@edciitd.com">events@edciitd.com</a>
+              {event.speakers && event.speakers.length > 0 && (
+                <motion.div
+                  className="sidebar-card"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.9 }}
+                >
+                  <h3>Speakers</h3>
+                  <div className="speakers-list">
+                    {event.speakers.map((speaker, index) => (
+                      <div key={index} className="speaker-item">
+                        <div className="speaker-avatar">
+                          <User size={20} />
+                        </div>
+                        <div className="speaker-info">
+                          <h4>{speaker.name}</h4>
+                          <p>{speaker.designation}</p>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                </div>
-                <div className="contact-item">
-                  <Phone size={18} />
-                  <div>
-                    <strong>Phone</strong>
-                    <a href="tel:+911234567890">+91 12345 67890</a>
+                </motion.div>
+              )}
+
+              {event.prizes && (
+                <motion.div
+                  className="sidebar-card"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 1.0 }}
+                >
+                  <h3>Prizes</h3>
+                  <div className="prizes-list">
+                    {Object.entries(event.prizes).map(([key, value]) => (
+                      <div key={key} className="prize-item">
+                        <h4>{key.replace('_', ' ').toUpperCase()}</h4>
+                        <p>{value}</p>
+                      </div>
+                    ))}
                   </div>
-                </div>
-                <div className="contact-item">
-                  <MapPin size={18} />
-                  <div>
-                    <strong>Address</strong>
-                    <span>IIT Delhi, Hauz Khas, New Delhi</span>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
+                </motion.div>
+              )}
+            </div>
           </div>
         </div>
       </section>
-
-      {/* Related Events */}
-      {filteredRelatedEvents.length > 0 && (
-        <section className="related-events-section">
-          <div className="container">
-            <div className="section-header">
-              <h2>More Events You Might Like</h2>
-            </div>
-            
-            <div className="related-events-grid">
-              {filteredRelatedEvents.map((relatedEvent, index) => (
-                <EventCard
-                  key={relatedEvent.id}
-                  event={relatedEvent}
-                  index={index}
-                />
-              ))}
-            </div>
-
-            <div className="view-all-events">
-              <Link to="/events" className="btn btn-outline">
-                View All Events
-                <ArrowLeft size={16} style={{ transform: 'rotate(180deg)' }} />
-              </Link>
-            </div>
-          </div>
-        </section>
-      )}
     </div>
   );
 };

@@ -13,7 +13,6 @@
 
 .navbar.scrolled {
   background: rgba(0, 0, 0, 0);
-  box-shadow: var(--shadow-lg);
 }
 .nav-container {
   position: relative;

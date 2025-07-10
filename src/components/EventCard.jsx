@@ -9,7 +9,8 @@ import {
   Bookmark,
   Share2,
   Star,
-  AlertCircle
+  AlertCircle,
+  Eye
 } from 'lucide-react';
 import { format } from 'date-fns';
 import '../styles/EventCard.css';
@@ -96,6 +97,9 @@ const EventCard = ({
         text: event.description,
         url: window.location.origin + `/events/${event.id}`,
       });
+    } else {
+      navigator.clipboard.writeText(window.location.origin + `/events/${event.id}`);
+      // You can add a toast notification here
     }
   };
 
@@ -162,7 +166,7 @@ const EventCard = ({
             </div>
           )}
 
-          {/* Quick Actions */}
+          {/* Quick Actions - Always Visible */}
           <div className="quick-actions">
             <button 
               className={`action-btn ${isBookmarked ? 'active' : ''}`}
@@ -199,15 +203,7 @@ const EventCard = ({
           {/* Event Title */}
           <h3 className="event-title">{event.title}</h3>
 
-          {/* Event Description */}
-          <p className="event-description">
-            {event.description.length > 120 
-              ? `${event.description.substring(0, 120)}...` 
-              : event.description
-            }
-          </p>
-
-          {/* Event Details */}
+          {/* Event Details - Hidden in card, shown only on detail page */}
           <div className="event-details">
             <div className="detail-item">
               <Calendar size={16} />
@@ -219,16 +215,18 @@ const EventCard = ({
             </div>
           </div>
 
-          {/* Event Actions - Removed registration */}
+          {/* View Details Button */}
           <div className="event-actions">
-            <div className="btn btn-outline">
+            <Link 
+              to={`/events/${event.id}`}
+              className="view-details-btn"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Eye size={16} />
               View Details
-            </div>
+            </Link>
           </div>
         </div>
-
-        {/* Hover Effect */}
-        <div className="card-glow"></div>
       </div>
     </div>
   );

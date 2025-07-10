@@ -228,67 +228,63 @@ const Events = () => {
               </select>
             </div>
 
-            {/* View Toggle */}
+            {/* View Controls */}
             <div className="view-controls">
               <button
                 className={`view-btn ${viewMode === 'grid' ? 'active' : ''}`}
                 onClick={() => setViewMode('grid')}
                 title="Grid View"
               >
-                <Grid size={20} />
+                <Grid size={18} />
               </button>
               <button
                 className={`view-btn ${viewMode === 'list' ? 'active' : ''}`}
                 onClick={() => setViewMode('list')}
                 title="List View"
               >
-                <List size={20} />
+                <List size={18} />
               </button>
             </div>
           </div>
 
           {/* Results Count */}
           <div className="results-count">
-            <span>{filteredEvents.length} event{filteredEvents.length !== 1 ? 's' : ''} found</span>
+            Showing {filteredEvents.length} of {events.length} events
           </div>
         </div>
       </section>
 
-      {/* Events Grid/List */}
+      {/* Events Content */}
       <section className="events-content">
         <div className="container">
-          <AnimatePresence mode="wait">
-            {filteredEvents.length === 0 ? (
-              <motion.div
-                className="no-events"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-              >
-                <Calendar size={64} />
-                <h3>No events found</h3>
-                <p>Try adjusting your filters or search terms.</p>
-              </motion.div>
-            ) : (
-              <motion.div
-                className={`events-${viewMode}`}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                layout
-              >
+          {filteredEvents.length > 0 ? (
+            <div className={`events-grid ${viewMode === 'list' ? 'events-list' : ''}`}>
+              <AnimatePresence>
                 {filteredEvents.map((event, index) => (
-                  <EventCard
+                  <motion.div
                     key={event.id}
-                    event={event}
-                    viewMode={viewMode}
-                    index={index}
-                    isLocalData={true}
-                  />
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ delay: index * 0.05 }}
+                  >
+                    <EventCard 
+                      event={event} 
+                      viewMode={viewMode}
+                      isLocalData={true}
+                      index={index}
+                    />
+                  </motion.div>
                 ))}
-              </motion.div>
-            )}
-          </AnimatePresence>
+              </AnimatePresence>
+            </div>
+          ) : (
+            <div className="no-events">
+              <AlertCircle size={64} />
+              <h3>No events found</h3>
+              <p>Try adjusting your search criteria or filters</p>
+            </div>
+          )}
         </div>
       </section>
     </div>

@@ -593,7 +593,7 @@
   background: var(--bg-secondary);
   border-radius: var(--radius-xl);
   border: 1px solid var(--border-primary);
-  max-width: 500px;
+
   width: 90%;
   max-height: 90vh;
   overflow: hidden;
@@ -705,7 +705,7 @@
   }
   
   .modal-content {
-    width: 95%;
+
   }
   
   .modal-header,

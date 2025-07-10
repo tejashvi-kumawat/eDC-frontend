@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { BookOpen, ArrowRight } from 'lucide-react';
-import BlogCard from '../Blogs/BlogCard';
+import BlogCard from '../BlogCard';
 
 const FeaturedBlogs = ({ blogs }) => {
   if (!blogs || blogs.length === 0) {
@@ -12,13 +12,13 @@ const FeaturedBlogs = ({ blogs }) => {
           <div className="section-header">
             <h2>
               <BookOpen size={24} />
-              Featured Articles
+              Featured Blogs
             </h2>
           </div>
           <div className="no-blogs">
-            <p>No featured articles available at the moment.</p>
+            <p>No featured blogs available at the moment.</p>
             <Link to="/blogs" className="btn btn-primary">
-              View All Articles
+              View All Blogs
             </Link>
           </div>
         </div>
@@ -32,7 +32,7 @@ const FeaturedBlogs = ({ blogs }) => {
         <div className="section-header">
           <h2>
             <BookOpen size={24} />
-            Featured Articles
+            Featured Blogs
           </h2>
           <p>Insights and stories from our community</p>
         </div>
@@ -46,14 +46,14 @@ const FeaturedBlogs = ({ blogs }) => {
               transition={{ delay: index * 0.1, duration: 0.8 }}
               viewport={{ once: true }}
             >
-              <BlogCard blog={blog} />
+              <BlogCard blog={blog} featured={true} />
             </motion.div>
           ))}
         </div>
 
         <div className="section-cta">
           <Link to="/blogs" className="btn btn-outline">
-            Read More Articles
+            Read More Blogs
             <ArrowRight size={20} />
           </Link>
         </div>
