@@ -12,7 +12,7 @@ import ScrollToTop from './components/ScrollToTop';
 
 // Pages
 import HomePage from './pages/HomePage.jsx';
-import Initiatives from './Pages/Initiatives.jsx';
+import Initiatives from './pages/Initiatives.jsx';
 import Team from './pages/Team.jsx';
 import Events from './pages/Events.jsx';
 import EventDetail from './pages/EventDetail.jsx';
