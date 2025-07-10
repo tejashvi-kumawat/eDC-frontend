@@ -250,7 +250,7 @@
   position: relative;
   height: 280px;
   overflow: hidden;
-  background: var(--bg-tertiary);
+  background: rgba(142, 110, 79, 0.347);
 }
 
 .member-image img {

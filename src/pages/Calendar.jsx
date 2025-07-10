@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { 
   ChevronLeft, 
   ChevronRight, 
@@ -34,7 +35,7 @@ import {
 // import ErrorMessage from '../components/ErrorMessage';
 
 // Local Data
-import { localCalendarData } from '../data/calendarData';
+import { localEventsData } from '../data/eventsData';
 
 // Styles
 import '../styles/Calendar.css';
@@ -49,15 +50,16 @@ const Calendar = () => {
   // const { data: eventsData, isLoading, error } = useEvents();
   
   // Use only local data
-  const events = localCalendarData;
+  const events = localEventsData;
 
   const eventTypes = [
     { value: 'all', label: 'All Events', color: '#007aff' },
-    { value: 'workshop', label: 'Workshops', color: '#32d74b' },
-    { value: 'seminar', label: 'Seminars', color: '#007aff' },
-    { value: 'competition', label: 'Competitions', color: '#ff453a' },
-    { value: 'meetup', label: 'Meetups', color: '#ff9f0a' },
-    { value: 'conference', label: 'Conferences', color: '#af52de' },
+    { value: 'Competition', label: 'Competitions', color: '#ff453a' },
+    { value: 'Seminar', label: 'Seminars', color: '#007aff' },
+    { value: 'Mentorship', label: 'Mentorship', color: '#32d74b' },
+    { value: 'Hackathon', label: 'Hackathons', color: '#af52de' },
+    { value: 'Investment Session', label: 'Investment Sessions', color: '#ff9f0a' },
+    { value: 'Launch Event', label: 'Launch Events', color: '#5856d6' },
   ];
 
   const filteredEvents = useMemo(() => {
@@ -342,19 +344,26 @@ const EventsList = ({ events }) => {
 
 // Event List Item Component
 const EventListItem = ({ event, index }) => {
+  const navigate = useNavigate();
+  
   const formatTime = (dateString) => {
     return format(new Date(dateString), 'h:mm a');
   };
 
   const getEventTypeColor = (type) => {
     const colors = {
-      workshop: '#32d74b',
-      seminar: '#007aff',
-      competition: '#ff453a',
-      meetup: '#ff9f0a',
-      conference: '#af52de'
+      Competition: '#ff453a',
+      Seminar: '#007aff',
+      Mentorship: '#32d74b',
+      Hackathon: '#af52de',
+      'Investment Session': '#ff9f0a',
+      'Launch Event': '#5856d6'
     };
     return colors[type] || '#007aff';
+  };
+
+  const handleViewDetails = () => {
+    navigate(`/events/${event.id}`);
   };
 
   return (
@@ -391,9 +400,12 @@ const EventListItem = ({ event, index }) => {
       </div>
       
       <div className="event-actions">
-        <div className="btn btn-outline disabled">
+        <button 
+          className="btn btn-outline"
+          onClick={handleViewDetails}
+        >
           View Details
-        </div>
+        </button>
       </div>
     </motion.div>
   );

@@ -89,7 +89,7 @@
   text-align: center;
   color: var(--primary);
   font-weight: 700;
-  font-size: 2rem;
+  font-size: 1rem;
 }
 .stat-item p {
   color: var(--text-secondary);
@@ -239,7 +239,7 @@
 
 /* Footer Section */
 .footer-section {
-  background: var(--bg-quaternary);
+
   color: var(--text-primary);
   padding: 2rem 0;
   margin-top: 3rem;

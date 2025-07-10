@@ -6,6 +6,7 @@
 
 /* Page Header */
 .page-header {
+  height: fit-content;
   padding: 120px 0 80px;
   position: relative;
   text-align: center;

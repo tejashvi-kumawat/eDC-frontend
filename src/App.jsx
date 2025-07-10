@@ -12,21 +12,21 @@ import ScrollToTop from './components/ScrollToTop';
 
 // Pages
 import HomePage from './pages/HomePage.jsx';
-import Initiatives from './Pages/Initiatives';
-import Team from './pages/Team';
-import Events from './pages/Events';
-import EventDetail from './pages/EventDetail';
-import Opportunities from './pages/Opportunities';
-import Blogs from './pages/Blogs';
-import Contact from './pages/Contact';
-import Calendar from './pages/Calendar';
-import FireStrip from './components/FireStrip.jsx';
-import BECon from './pages/BECon';
+import Initiatives from './Pages/Initiatives.jsx';
+import Team from './pages/Team.jsx';
+import Events from './pages/Events.jsx';
+import EventDetail from './pages/EventDetail.jsx';
+import Opportunities from './pages/Opportunities.jsx';
+import Blogs from './pages/Blogs.jsx';
+import Contact from './pages/Contact.jsx';
+import Calendar from './pages/Calendar.jsx';
+// import FireStrip from './components/FireStrip.jsx';
+import BECon from './pages/BECon.jsx';
 
 // // Admin Pages
-import AdminDashboard from './pages/Admin/Dashboard';
-import ManageBlogs from './pages/Admin/ManageBlogs';
-import ManageTeam from './pages/Admin/ManageTeam';
+// import AdminDashboard from './pages/Admin/Dashboard';
+// import ManageBlogs from './pages/Admin/ManageBlogs';
+// import ManageTeam from './pages/Admin/ManageTeam';
 // import ManageEvents from './pages/Admin/ManageEvents';
 // import ManageInitiatives from './pages/Admin/ManageInitiatives';
 // import ContactQueries from './pages/Admin/ContactQueries';
