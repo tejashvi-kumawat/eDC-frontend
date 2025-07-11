@@ -6,22 +6,46 @@ import '../styles/Navbar.css';
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      const currentScrollY = window.scrollY;
+      
+      // Set scrolled state for background changes
+      setIsScrolled(currentScrollY > 50);
+      
+      // Hide/show navbar based on scroll direction (Fueled-style behavior)
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        // Scrolling down - hide navbar
+        setIsVisible(false);
+      } else if (currentScrollY < lastScrollY) {
+        // Scrolling up - show navbar
+        setIsVisible(true);
+      }
+      
+      // Always show navbar at the top
+      if (currentScrollY <= 100) {
+        setIsVisible(true);
+      }
+      
+      setLastScrollY(currentScrollY);
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [lastScrollY]);
 
   useEffect(() => {
     setIsOpen(false);
     setActiveDropdown(null);
   }, [location]);
+  useEffect(() => {
+  document.body.style.overflow = isOpen ? 'hidden' : 'auto';
+}, [isOpen]);
 
   const navItems = [
     { path: '/', label: 'Home' },
@@ -47,10 +71,10 @@ const Navbar = () => {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
+    <nav className={`navbar ${isScrolled ? 'scrolled' : ''} ${isVisible ? 'visible' : 'hidden'} ${isOpen ? 'blur-on-menu' : ''}`}>
       <div className="nav-container">
         <Link to="/" className="nav-logo">
-          <img src="/custom-logo.png" alt="Custom Logo" style={{ height: '72px', width: 'auto' }} />
+          <img src="/custom-logo.png" alt="Custom Logo" style={{ height: '40px', width: 'auto' }} />
         </Link>
 
         <div className="nav-menu">
@@ -112,6 +136,8 @@ const Navbar = () => {
               {item.label}
             </Link>
           ))}
+          
+
           
           {/* <div className="mobile-admin-section">
             <h4>Admin Panel</h4>
