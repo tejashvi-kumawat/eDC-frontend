@@ -420,10 +420,3 @@
   }
 }
 
-/* Glassmorphism effect for better visual appeal */
-.navbar.scrolled .nav-container {
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: 0;
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
