@@ -44,8 +44,22 @@ const Navbar = () => {
     setActiveDropdown(null);
   }, [location]);
   useEffect(() => {
-  document.body.style.overflow = isOpen ? 'hidden' : 'auto';
-}, [isOpen]);
+    document.body.style.overflow = isOpen ? 'hidden' : 'auto';
+  }, [isOpen]);
+
+  useEffect(() => {
+  const handleResize = () => {
+    if (window.innerWidth > 1024) {
+      setIsOpen(false); 
+    }
+  };
+
+  window.addEventListener('resize', handleResize);
+
+  // Clean up on unmount
+  return () => window.removeEventListener('resize', handleResize);
+}, []);
+
 
   const navItems = [
     { path: '/', label: 'Home' },
