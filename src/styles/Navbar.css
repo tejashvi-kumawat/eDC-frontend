@@ -1,3 +1,5 @@
+/* Done */
+
 .navbar {
   position: fixed;
   top: 0;
@@ -148,9 +150,9 @@
   top: 100%;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(15, 23, 42, 0.95);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background:rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
   padding: 1rem 0;
@@ -249,9 +251,9 @@
   bottom: 0;
   height: 100vh;
   width: 100vw;
-  background: rgba(255, 255, 255, 0.05); 
+  background:rgba(0,0,0, 0.05);
   backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(10px);
   transform: translateY(-100%); 
   opacity: 0;
   visibility: hidden;
@@ -266,9 +268,9 @@
 }
 
 .navbar.blur-on-menu {
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  background:rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background:rgba(0,0,0, 0.05);
 }
 
 
@@ -337,13 +339,14 @@
   .nav-menu {
     display: none;
   }
-
+  
   .navbar.scrolled {
   height: 90px;
-  }
+}
   .nav-toggle {
     display: block;
   }
+
 }
 
 @media (min-width: 1025px) {
