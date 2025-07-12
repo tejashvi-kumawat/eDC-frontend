@@ -253,7 +253,9 @@
 
 .social-links {
   display: flex;
+  position: static;
   gap: 1rem;
+  
 }
 
 .social-link {
