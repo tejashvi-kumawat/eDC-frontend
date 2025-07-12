@@ -290,7 +290,7 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  background: var(--primary);
+  background: var(--secondary-btn);
   color: white;
   border: none;
   padding: 0.625rem 1.25rem;
