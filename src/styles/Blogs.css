@@ -92,8 +92,8 @@
   padding: 2rem 0;
   background: var(--bg-secondary);
   border-bottom: 1px solid var(--border-primary);
-  position: sticky;
-  top: 80px;
+  position: relative;
+  top: 0px;
   z-index: 10;
   backdrop-filter: blur(20px);
 }
@@ -390,6 +390,7 @@
   line-height: 1.6;
   margin-bottom: 1.5rem;
   display: -webkit-box;
+  line-clamp : 3;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
