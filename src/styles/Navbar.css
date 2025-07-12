@@ -250,6 +250,7 @@
   right: 0;
   bottom: 0;
   height: 100dvh;
+  padding-top: 1.5rem;
   padding-bottom: 80px;
   width: 100vw;
   background: black;
