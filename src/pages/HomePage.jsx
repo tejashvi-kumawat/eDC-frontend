@@ -119,7 +119,7 @@ const HomePage = () => {
           style={{ y: y1 }}
         />
         
-        <div className="floating-elements">
+        {/* <div className="floating-elements">
           {[...Array(8)].map((_, i) => (
             <motion.div
               key={i}
@@ -154,7 +154,7 @@ const HomePage = () => {
               }}
             />
           ))}
-        </div>
+        </div> */}
 
         <div className="container">
           <div className="hero-content">
@@ -192,8 +192,9 @@ const HomePage = () => {
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.6 }}
+                
               >
-                Fostering innovation and entrepreneurial spirit among students, 
+                <br/><br/>Fostering innovation and entrepreneurial spirit among students, 
                 connecting them with industry leaders, mentors, and resources to 
                 build tomorrow's startups.
               </motion.p>
@@ -233,7 +234,7 @@ const HomePage = () => {
             </div>
 
             <motion.div
-              className="hero-stats"
+              className="hero-logo"
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 1 }}
@@ -243,8 +244,10 @@ const HomePage = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.97 }}
                 style={{
-                  width: 'min(440px, 80vw)',
-                  height: 'min(440px, 80vw)',
+                  position: 'relative',
+                  bottom: '100px',
+                  width: '20vw',
+                  height: '20vw',
                   borderRadius: '50%',
                   background: 'rgba(30, 30, 30, 0.92)',
                   boxShadow: '0 4px 32px 0 rgba(0,0,0,0.18)',
@@ -263,7 +266,7 @@ const HomePage = () => {
           </div>
         </div>
 
-        <motion.div
+        {/* <motion.div
           className="scroll-indicator"
           onClick={scrollToNext}
           animate={{ y: [0, 10, 0] }}
@@ -272,8 +275,10 @@ const HomePage = () => {
         >
           <ChevronDown size={24} />
           <span>Scroll to explore</span>
-        </motion.div>
+        </motion.div> */}
       </section>
+
+       
 
       {/* Features Section */}
       <section className="features-section" ref={featuresRef}>
