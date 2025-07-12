@@ -249,7 +249,8 @@
   left: 0;
   right: 0;
   bottom: 0;
-  height: 100vh;
+  height: 100dvh;
+  padding-bottom: 80px;
   width: 100vw;
   background: black;
   transform: translateY(-100%); 
