@@ -411,7 +411,7 @@
 }
 
 .read-more-btn {
-  background: var(--primary);
+  background: var(--secondary-btn);
   color: white;
   border: none;
   padding: 0.5rem 1rem;
